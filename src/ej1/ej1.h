@@ -15,6 +15,8 @@ using namespace std;
 // Here go declarations of functions which are exported by the problem solver,
 // global variables, etc.
 
+#define MAX_INPUT_SIZE 100000
+
 /******* Point stuff ********/
 struct point {
 	int x, y;
