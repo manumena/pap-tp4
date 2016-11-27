@@ -23,9 +23,12 @@ vector<point> sequence_border_vertices_clockwise(adj_map& cn) {
     result.push_back(start);
     visited[start] = true;
 
+    // O(log(n))
     // choose following node, one of two neighbors of "start", in clocwkise fashion
     // since "start" is the "minimum" point in the graph by the "<" ordering for edges and points, it is guaranteed to be a leftmost point. Thus, both its neighbors in the border graph are either to its right or vertically aligned with it. Therefore, the following node in clockwise ordering is the uppermost of both neighbors.
-    point following_node_clockwise = cn[start][0].y > cn[start][1].y ? cn[start][0] : cn[start][1];
+    point neighbor1 = cn[start][0];
+    point neighbor2 = cn[start][1];
+    point following_node_clockwise = neighbor1.y > neighbor2.y ? neighbor1 : neighbor2;
 
     // walk the circuit in the direction determined by start --> following_node_clockwise
     point current = following_node_clockwise;
