@@ -66,15 +66,14 @@ void load_test() {
     /******* Solve and test *******/
     ifstream input_load_case(test_file_path);
 
-    multiset<edge> es = read_triangulation_graph(MAX_INPUT_SIZE, input_load_case);
+    size_t n;
+    input_load_case >> n; // (consume first line of input file)
+
+    multiset<edge> es = read_triangulation_graph(n, input_load_case);
     adj_map cn = get_border_subgraph(es);
     vector<point> obtained = sequence_border_vertices_clockwise(cn);
 
     remove(test_file_path.c_str());
-
-    // cout << endl;
-    // print_border_vertex_sequence(obtained, cout);
-    // print_border_vertex_sequence(expected, cout);
 
     ASSERT(obtained == expected);
 }
