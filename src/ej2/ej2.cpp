@@ -1,4 +1,5 @@
 #include "./ej2.h"
+#include <math.h>
 
 using namespace std;
 
@@ -21,14 +22,12 @@ int minCount(vector<int> vec) {
 	return count;
 }
 
-float expectedValue(vector<int> vec) {
-	float mean = 0.0;
-	mean = (float) vec.size() / minCount(vec);
-	cout << mean << endl;
-
+double expectedValue(vector<int> vec) {
+	double mean = 0.0;
+	mean = (double) vec.size() / (double) minCount(vec);
 	for(int i = 1; i < vec.size(); i++) {
 		vector<int> subVec(vec.begin() + i, vec.end());
-		mean += (float) subVec.size() / minCount(subVec) - 1;
+		mean = mean + (double) subVec.size() / (double) minCount(subVec) - 1.0;
 	}
 
 	return mean;
@@ -45,7 +44,7 @@ void run_solver() {
 		vec.push_back(num);
 	}
 
-	cout << expectedValue(vec) << endl;
+	cout << setprecision(7) << expectedValue(vec) << endl;
 }
 
 // MAIN
