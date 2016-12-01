@@ -1,3 +1,28 @@
 \section{Ejercicio 2}
 
 Peso asignado: 8.
+
+\subsection{Introducción}
+
+Se tiene un arreglo de $N$ enteros y se desea ordenarlo en BigTalk. El
+lenguaje es capaz de permutar aleatoriamente los últimos $N - i$ númneros del
+arreglo, siendo todas las posibles permutaciones equiprobables.
+
+El objetivo del problema es obtener ese arreglo y calcular cuánto tardaría en
+ordenarse con un programa en Bigtalk que haga lo siguiente:
+
+\begin{enumerate}
+\item Se comienza con $i = 0$ y el arreglo $A$ de tamaño $N$ dado en la
+entrada
+\item Se permuta al azarel arreglo $A[i..N)$
+\item Mientras que $i$ sea menor a $N$ y el menor elemento de $A[i..N)$ sea
+$A[i]$ se incrementa $i$ en 1
+\item Si $i < N$ se vuelve al paso 2
+\end{enumerate}
+
+Para calcular cuánto tarda el algoritmo se debe contar la cantidad de veces
+que se repite el paso 2 ya que el tiempo consumido en el resto de los pasos es
+despreciable, por lo que se hace enfoque en contar cuántas veces se permuta un
+sufijo de $A$ aleatoriamente. Debido al azar presente, la cantidad de
+repeticiones necesarias para ordenar el arreglo no es posible de determinar
+con exactitud, por lo que se pide calcular la esperanza.
