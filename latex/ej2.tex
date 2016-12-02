@@ -100,3 +100,48 @@ de la Geométrica que describe la primer iteración con el resto de las
 esperanzas de las iteraciones siguientes. Para ello es necesario calcular
 cada esperanza por separado, calculando la cantidad de veces que se repite el
 mínimo en el subarreglo.
+
+\subsection{Algoritmo}
+
+El algoritmo es muy sencillo, consiste en un bucle de $N$ iteraciones en donde en cada iteracion se cuenta la cantidad de veces que se repite el elemento de mínimo valor en el subarreglo $A[i..N)$ de manera lineal.
+
+\bigskip
+
+\begin{algorithm}[H]
+	\caption{\textit{esperanza}}
+	\Input{ Arreglo de enteros $A$ }
+	\Output{ Doble $esperanza$ }
+
+	$e \gets$ $A$.tamaño() $/$ cantMin($A$) \;
+
+    \For {$i = 0$ hasta $i = A$.tamaño()} {
+		$e \gets e + (A$.tamaño() $- i) /$ cantMin($A[i..N)$) $- 1$ \;
+	}
+
+	\Return{e}
+\end{algorithm}
+
+\bigskip
+
+\begin{algorithm}[H]
+	\caption{\textit{cantMin}}
+	\Input{ Arreglo de enteros $A$ }
+	\Output{ Entero $cant$ }
+
+	$cant \gets 1$ \;
+	$min \gets A[0]$ \;
+
+    \For {$i = 1$ hasta $i = A$.tamaño()} {
+    	\If {$A[i] = min$} {
+    		$cant++$ \;
+    	}
+    	\If {$A[i] < min$} {
+			$min \gets A[i]$ \;
+    		$cant \gets 1$ \;
+    	}
+	}
+
+	\Return{cant}
+\end{algorithm}
+
+\bigskip
