@@ -62,14 +62,14 @@ void test_sample_inputs() {
     vector<int> permutation = {2, 4, 3, 1};
     vector<int> cycle_sizes = get_cycle_sizes(permutation);
 
-	int tournament_count = get_posible_tournaments_count(cycle_sizes);
+    int tournament_count = get_posible_tournaments_count(cycle_sizes);
     ASSERT_EQ(tournament_count, 4);
 
-	permutation = {2, 3, 1};
+    permutation = {2, 3, 1};
     cycle_sizes = get_cycle_sizes(permutation);
 
-	tournament_count = get_posible_tournaments_count(cycle_sizes);
-	ASSERT_EQ(tournament_count, 2);
+    tournament_count = get_posible_tournaments_count(cycle_sizes);
+    ASSERT_EQ(tournament_count, 2);
 }
 
 void test_get_posible_tournaments_count_single_element() {
@@ -119,11 +119,11 @@ void test_get_posible_tournaments_count_even_cycles() {
     int tournament_count = get_posible_tournaments_count(cycle_sizes);
     ASSERT_EQ(tournament_count, 0);
 
-	permutation = {5, 1, 2, 3, 4, 7, 6};
+    permutation = {5, 1, 2, 3, 4, 7, 6};
     cycle_sizes = get_cycle_sizes(permutation);
     ASSERT_EQ(tournament_count, 0);
 
-	permutation = {5, 1, 2, 3, 4, 7, 6, 8, 9};
+    permutation = {5, 1, 2, 3, 4, 7, 6, 8, 9};
     cycle_sizes = get_cycle_sizes(permutation);
     ASSERT_EQ(tournament_count, 0);
 }
@@ -135,25 +135,24 @@ void test_get_posible_tournaments_big_count_values() {
     int tournament_count = get_posible_tournaments_count(cycle_sizes);
     ASSERT_EQ(tournament_count, 268435456);
 
-	permutation = {1, 2, 3, 4, 5, 6, 7, 10, 8, 9};
+    permutation = {1, 2, 3, 4, 5, 6, 7, 10, 8, 9};
     cycle_sizes = get_cycle_sizes(permutation);
     tournament_count = get_posible_tournaments_count(cycle_sizes);
     ASSERT_EQ(tournament_count, 536870912);
 
-	permutation = {1, 2, 3, 4, 5, 6, 7, 8, 11, 9, 10};
-    cycle_sizes = get_cycle_sizes(permutation);
-    tournament_count = get_posible_tournaments_count(cycle_sizes);
+    permutation = {1, 2, 3, 4, 5, 6, 7, 8, 11, 9, 10};
+    cycle_sizes = get_cycle_sizes(permutation); tournament_count = get_posible_tournaments_count(cycle_sizes);
     ASSERT_EQ(tournament_count, 438952513);
 }
 
 void test_get_posible_tournaments_big_input() {
     vector<int> permutation;
-	for (int i = 1; i < 100001; i++) {
-		permutation.push_back(i);
-	}
+    for (int i = 1; i < 100001; i++) {
+        permutation.push_back(i);
+    }
     vector<int> cycle_sizes = get_cycle_sizes(permutation);
 
-	int tournament_count = get_posible_tournaments_count(cycle_sizes);
+    int tournament_count = get_posible_tournaments_count(cycle_sizes);
     ASSERT_EQ(tournament_count, 298208567);
 }
 
