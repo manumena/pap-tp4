@@ -82,18 +82,20 @@ public:
 		if (ray.intersects(bc)) intersections++;
 		if (ray.intersects(ca)) intersections++;
 		if (ray.contains(a)){
-			if (b.y <= p.y) intersections--;
-			if (c.y <= p.y) intersections--;
+			if (b.y < p.y) intersections--;
+			if (c.y < p.y) intersections--;
 		}
 		if (ray.contains(b)){
-			if (a.y <= p.y) intersections--;
-			if (c.y <= p.y) intersections--;
+			if (a.y < p.y) intersections--;
+			if (c.y < p.y) intersections--;
 		}
 		if (ray.contains(c)){
-			if (a.y <= p.y) intersections--;
-			if (b.y <= p.y) intersections--;
+			if (a.y < p.y) intersections--;
+			if (b.y < p.y) intersections--;
 		}
-		intersections = max(intersections, 0);
+		if ((ray.contains(a) && ray.contains(b)) || (ray.contains(a) && ray.contains(c)) || (ray.contains(c) && ray.contains(b))) {
+			intersections = 0;
+		}
 		return intersections == 1 || ab.contains(p) || bc.contains(p) || ca.contains(p);
 	}
 };

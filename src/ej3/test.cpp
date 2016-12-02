@@ -46,6 +46,7 @@ void run_unit_tests() {
     Triangle t = Triangle(a,b,c);
     Triangle t2 = Triangle(Point(0,0),Point(2,-1),Point(2,1));
     Triangle t3 = Triangle(Point(0,0),Point(0,10), Point(10,10));
+    Triangle t4 = Triangle(Point(0,0),Point(4,0),Point(4,4));
     check(t.contains(Point(2,0)), true);
     check(t.contains(Point(2,1)), true);
     check(t.contains(Point(2,2)), true);
@@ -53,4 +54,5 @@ void run_unit_tests() {
     check(t.contains(Point(4,1)), false);
     check(t2.contains(Point(1,0)), true);
     check(t3.contains(Point(10,0)), false);
+    check(t4.contains(Point(7,0)), false);
 }

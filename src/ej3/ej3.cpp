@@ -36,9 +36,6 @@ void run_solver() {
     // Calculate places in each triangle
     calculate_places_triangles();
 
-    // cout << historical_places_in_triangle << endl;
-    // cout << enemy_places_in_triangle << endl;
-
     // Calculate max historical places in convex polygon for each leftmost inferior point
     int ans = min(2, H);
     for (int i = 0; i < H; ++i)
@@ -116,7 +113,6 @@ int calculate_max_historical_places(int ref_point) {
                 if (keeps_convex && no_enemies)
                     dp[i][j] = max(dp[i][j], h_places + dp[j][k] - 2);
             }
-            // printf("%d %d %d %d\n", ref_point, hi, hj, dp[i][j]);
         }
     }
 
