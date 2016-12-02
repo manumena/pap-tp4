@@ -105,7 +105,7 @@ Un Punto contendrá sus coordenadas $x,y$ ya que trabajamos sobre un espacio bid
 la igualdad de puntos por la igualdad de sus coordenadas. La suma y resta de puntos se define como la suma y resta
 de sus coordenadas respectivamente. El producto crus $P \times Q = P_x * Q_y - Q_x * P_y$.
 
-\subsubsection{Clase segmento}
+\subsubsection*{Clase segmento}
 
 Un segmento contendrá simplemente un Punto origen $a$ y un Punto destino $b$. Asi se definen las funciones:
 
@@ -153,7 +153,7 @@ cumpla $alpha = (Q.a-a) \times v2 / v1 \times v2$ para encontrar la intersecció
 fueran infinitas. Luego hay que fijarse si ambos segmentos contienen la intersección de las rectas infinitas
 y si lo hacen, devolver la intersección.
 
-\subsubsection{Clase Triángulo}
+\subsubsection*{Clase Triángulo}
 
 Un triángulo se define mediante sus tres vértices extremos $a$, $b$ y $c$.
 La operación importante para esta clase será:
@@ -200,19 +200,23 @@ segmento horizontal, los casos posibles (según la coordenada $y$ de los tres pu
 
 \centerline{\includegraphics[scale=0.7]{img/ej36.png}}
 
-Entonces lo que el algoritmo hace según el caso:
+Entonces lo que el algoritmo hace según los casos anteriores (entre los \textit{if} de las líneas 16-39) es:
 \begin{itemize}
 \item[A:] $intersections$ termina siendo 2 ya que se cuenta la misma dos veces, lo cual esta bien porque
 no se quiere considerar que $ray$ entró en el triángulo.
 \item[B:] $intersections$ termina siendo 0, lo cual esta bien porque
 no se quiere considerar que $ray$ entró en el triángulo.
-\item[C:] $intersections$ termina siendo 1 ya que se quiere considerar que $ray$ entró en el triángulo.
+\item[C:] se cuenta el vértice como 1 intersección ya que se quiere considerar que $ray$ entró en el triángulo.
 \item[D:] $intersections$ termina siendo 0 porque $ray$ interseca con dos vértices del triángulo, por lo
 tanto la salida será true si y solo si el punto $P$ está adentro de uno de los bordes.
 \item[E:] idem caso D.
 \end{itemize}
 
-\subsubsection{Resolución del problema}
+Notar que todo lo anterior sirve si el punto no está incluido en alguno de los lados del triángulo, por este
+motivo, si el punto esta contenido en los segmentos $ab, bc$ ó $ca$, devolvemos true (incluyendo el caso
+en el que el punto sea uno de los vértices del triángulo).
+
+\subsubsection*{Resolución del problema}
 
 \begin{algorithm}[H]
 	\caption{\textit{MaximosPuntosHistoricosEnMurallaConvexa}}
@@ -247,6 +251,28 @@ tanto la salida será true si y solo si el punto $P$ está adentro de uno de los
 
 	\Return{$ans$}
 \end{algorithm}
+
+Esta es la función principal del problema, tal como pide el enunciado recibe dos enteros $H,E$ con la cantidad
+de puntos históricos y edificios enemigos y dos vectores $historical\_places$ y $enemy\_places$ con las coordenadas
+de los mismos.
+Con ellos, calcula y devuelve la máxima cantidad de puntos históricos que puede contener una
+muralla convexa sin edificios enemigos dentro.
+
+El algoritmo comienza declarando dos vectores tridimencionales $historical\_places\_in\_triangle$ y \\
+$enemy\_places\_in\_triangle$ que contendrán para cada tripla de puntos diferentes, la cantidad de puntos históricos
+y la cantidad de puntos enemigos dentro del triángulo que determina la tripla.
+Luego el \textit{For} de las líneas 3-19 se encarga justamente de tomar triplas de tres puntos diferentes,
+crear un triángulo y fijarse para cada punto histórico y edificio enemigo si está contenido en el triángulo, asi
+calculando los valores de los dos vectores.
+
+La línea 20 inicializa $ans$ como min(2, $H$) por el caso de que hayan menos de tres puntos hitóricos en la ciudad
+y entonces se tenga que contruir una muralla para 0, 1 ó 2 puntos históricos (cosa que siempre es posible).
+
+Finalmente el \textit{For} de las líneas 21-23 calcula para cada punto histórico, la respuesta al problema
+si es que la muralla fuera armada a partir de ese punto uniéndolo mediante triángulos a otros puntos históricos
+con coordenada $y$ mayor o coordenada $y$ equivalente y mayor coordenada $x$, todo esto tal como fue explicado
+en la sección de \textbf{Explicación}. La respuesta es el máximo de estos valores, porque en algún momento el ciclo
+toma el punto para el que se formará el \textit{Convex Hull} buscado (porque se prueba a partir de todos los puntos).
 
 \bigskip
 
