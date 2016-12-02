@@ -218,5 +218,25 @@ La estructura de multiconjunto y la de mapa se implementan utilizando \texttt{mu
 
 Como se explicó al describir los algoritmos, el grafo $\grtr$ se representa como un multiconjunto de sus ejes y $\brtr$ con un mapa de adyacencias. Ambos grafos tienen como vértices en su implementación valores de tipo \texttt{point}, y como ejes valores de tipo \texttt{edge}. Es decir, las biyecciones $g$ y $f$ utilizadas en la descripción del algoritmo son de carácter meramente conceptual, y en la implementación propiamente dicha no son necesarias pudiendo utilizar para estos grafos directamente valores de los tipos \texttt{point} y \texttt{edge} para sus nodos y aristas, los mismos usados para representar los puntos y segmentos del plano cartesiano. En particular, esto quiere decir que el uso de $f$ y $g$ en el pseudocódigo exhibido no afecta en el cálculo de la complejidad y puede considerarse $O(1)$ en todos los casos.
 
+\newpage
+
 \subsection{Casos de prueba}
+
+Se utilizaron instancias de prueba generadas manualmente que corresponden a las siguientes familias de instancias:
+
+\begin{itemize}
+\setlength\itemsep{0em}
+
+\item Casos de $n$ mínimo, i.e triángulos.
+\item Polígonos convexos triangulados de distintas formas.
+\item Polígonos cóncavos triangulados de distintas formas.
+\item Polígonos con varios vértices de menor abscisa, i.e casos en los que hay que ``desempatar'' el punto de comienzo del recorrido.
+
+\end{itemize}
+
+Notar que, en particular, los ejemplos dados en el enunciado corresponden a estas familias: el primero es convexo y tiene dos vértices de menor abscisa, el segundo es un triángulo y el tercero es cóncavo.
+
+\medskip
+
+Además, se testeó el programa con casos de la dimensión sugerida en el enunciado como máxima para verificar el funcionamiento correcto de la implementación en el límite de tamaño de entrada. El código entregado incluye una función que genera un tal caso, en el que el polígono triangulado consiste en unir cuadrados de tamaño $1 \times 1$ verticalmente y triangularlos trazando una diagonal en cada uno. La salida esperada en ese caso es simplemente el recorrido de los vértices ``izquierdos'' (de menor abscisa) de abajo hacia arriba y luego los ``derechos'' (de mayor absicsa) de arriba hacia abajo.
 
