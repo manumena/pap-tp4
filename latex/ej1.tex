@@ -4,60 +4,56 @@ Peso asignado: X.
 
 \subsection{Introducción teórica}
 
-\subsubsection{Partición de un polígono}
+\subsubsection{Partición de un polígono simple}
 
-\textbf{Definición.} Dado un polígono simple $P$, una \textit{partición} de $P$ es un conjunto $\tr$ de figuras $A$ que descompone la superficie de $P$, cumpliendo:
+\textbf{Definición.} Dado un polígono simple $P$ en el plano, una \textit{partición} de $P$ es un conjunto $\tr$ de figuras que descompone la superficie de $P$, cumpliendo:
 \begin{itemize}
 \setlength\itemsep{0em}
 \item La unión de las superficies de los elementos de $\tr$ resulta en la superficie de $P$.
-\item Tomados de a dos, los elementos de $\grtr$ tienen puntos en común solamente sobre sus bordes.
+\item Tomados de a dos, los elementos de $\tr$ tienen puntos en común solamente sobre sus bordes.
 \end{itemize}
 
-\subsubsection{Triangulación de un polígono}
+\subsubsection{Triangulación de un polígono simple}
 
-\textbf{Definición.} Dado un polígono simple $P$ de $n > 2$ vértices, una \textit{triangulación} de $P$ es una partición del mismo en la que todos los elementos son triángulos cuyos vértices son vértices de $P$. 
-
-\medskip
-
-\textbf{Propiedad.} Dado un polígono simple $P$ de $n > 2$ vértices, cualquier triangulación de $P$ tiene exactamente $n-2$ elementos.
+\textbf{Definición.} Dado un polígono simple $P$, una \textit{triangulación} de $P$ es una partición del mismo en la que todos los elementos son triángulos cuyos vértices son vértices de $P$. 
 
 \medskip
 
-\textbf{Observación.} \textit{(Borde en forma triangulada)} Un mismo segmento en una triangulación $\bar{P}$ de $P$ puede o bien ser un lado de $P$ o bien estar trazado en el interior de $P$. En el primer caso, dicho segmento sería lado de exactamente un triángulo de $\bar{P}$. En el segundo, al estar en el interior de $P$, tendría que pertenecer a exactamente dos triángulos de $\bar{P}$.
+\textbf{Propiedad.} Dado un polígono simple $P$ de $n$ vértices ($n > 2$), cualquier triangulación de $P$ tiene exactamente $n-2$ elementos.
+
+\medskip
+
+\textbf{Observación.} \textit{(Borde en forma triangulada)} Un segmento en una triangulación $\bar{P}$ de $P$ puede o bien ser un lado de $P$ o bien estar trazado en el interior de $P$. En el primer caso, dicho segmento sería lado de exactamente un triángulo de $\bar{P}$. En el segundo, al estar en el interior de $P$, tendría que pertenecer a exactamente dos triángulos de $\bar{P}$.
 
 \subsubsection{Grafo triangulación}
 
-Sea $P$ un polígono simple de $n > 2$ vértices y $\tr$ una triangulación de $P$.
+Sea $P$ un polígono simple de $n$ vértices y $\tr$ una triangulación de $P$.
 
 \medskip
 
-Un dibujo de $\tr$ en el plano puede tomarse como un \textit{embedding} de un grafo no-dirigido planar $\grtr$ que tiene un nodo por cada vértice de $\tr$ (o, equivalentemente, de $P$) y una arista por cada lado de triángulo que aparece en $\tr$, sin repeticiones. En efecto, $\grtr$ debe ser planar siendo que su mencionado \textit{embedding} no puede tener segmentos definidos por vértices de $P$ que estén cruzados; de lo contrario, se tendrían triángulos de la triangulación $\tr$ con superficies en intersección. Diremos que $\grtr$ es el \textit{grafo triangulación} de $\tr$.
+Un dibujo de $\tr$ en el plano puede tomarse como un \textit{embedding} de un grafo no-dirigido planar $\grtr$ que tiene un nodo por cada vértice de $\tr$ (o, equivalentemente, de $P$) y una arista por cada lado de triángulo que aparece en $\tr$, sin repeticiones. En efecto, $\grtr$ debe ser planar siendo que su mencionado \textit{embedding}, el dibujo de $\tr$, no puede tener aristas cruzadas, ya que estas representan lados de triángulos en la triangulación $\tr$ y esta por definición consiste en triángulos que no comparten superficie; si hubiera lados cruzados, se tendrían triángulos de $\tr$ con superficies en intersección. Diremos que $\grtr$ es el \textit{grafo triangulación} de $\tr$.
 
 \medskip
 
-Como $\grtr$ es planar, debe cumplir la \textit{fórmula de Euler}. Según esta, se satisface $R + n = m + 2$, donde $R$ es el número de regiones de cualquier dibujo de $\grtr$, $n$ su cantidad de vértices y $m$ su número de ejes. De la definición de triangulación se deriva inmediatamente que un dibujo de $\tr$ como partición de $P$ debe tener $n-1$ regiones: una por cada uno de los $n-2$ triángulos de $\tr$, y además la región externa. Por lo tanto, podemos deducir que la cantidad de ejes $|E(\grtr)|$ de $\grtr$ es $m = R + n - 2 = (n-1) + n - 2 = 2n-3$.
+Como $\grtr$ es planar, debe cumplir la \textit{fórmula de Euler}. Según esta, se satisface $R + n = m + 2$, donde $R$ es el número de regiones de cualquier dibujo de $\grtr$, $n$ su cantidad de vértices y $m$ su número de ejes. De la propiedad enunciada acerca de las triangulaciones se deriva inmediatamente que el dibujo de $\tr$ visto como embedding de $\grtr$ debe tener $n-1$ regiones: una por cada uno de los $n-2$ triángulos de $\tr$ y la región externa. Por lo tanto, podemos deducir que la cantidad de ejes $|E(\grtr)|$ de $\grtr$ es $m = R + n - 2 = (n-1) + n - 2 = 2n-3$.
 
 \medskip
 
-\textbf{Observación.} \textit{(linealidad de los ejes de un grafo triangulación)}. Dado un grafo de triangulación $\grtr$ de $n$ vértcies y $m$ ejes, se cumple $m = O(n)$.
+\textbf{Observación.} \textit{(linealidad de los ejes de un grafo triangulación)}. En un grafo de triangulación de $n$ vértcies y $m$ ejes, se cumple $m = O(n)$.
 
 \subsection{Problema}
 
-La entrada del problema consiste en $n-2$ triángulos que componen la triangulación $\tr$ de un polígono simple $P$ de $n > 2$ vértices, expresado cada uno de los triángulos en base a sus tres vértices escritos en coordenadas cartesianas enteras. 
+La entrada del problema consiste en $n-2$ triángulos que componen una triangulación $\tr$ de un polígono simple $P$ de $n > 2$ vértices, expresado cada uno de los triángulos de $\tr$ dando sus tres vértices escritos en coordenadas cartesianas enteras. 
 
-Formalmente, la entrada es un conjunto de triángulos $I = \{ T_i \mid i = 1 \dots n-2 \}$ donde el i-ésimo triángulo $T_i = \{ v_{i1}, v_{i2}, v_{i3} \}$ tiene sus vértices en coordenadas cartesianas enteras $v_{ij} = (x_{ij}, y_{ij}), \ j = 1,2,3$ (sin ningún orden específico). Considerando que los vértices de $\tr$ son los mismos de $P$, el conjunto de los $n$ vértices de $P$ o de $\tr$ es $V(I) = \bigcup_{T \in I} T$. Además, el conjunto de lados de triángulos que hay en $\tr$ es el conjunto de pares no-ordenados $E(I) = \bigcup_{\{ a,b,c \} \in I} \{ (a,b), (a,c), (b,c) \}$.
+Formalmente, la entrada es un conjunto $I = \{ T_i \mid i = 1 \dots n-2 \}$ de triángulos donde el i-ésimo triángulo $T_i = \{ v_{i1}, v_{i2}, v_{i3} \}$ tiene sus vértices en coordenadas cartesianas enteras $v_{ij} = (x_{ij}, y_{ij}), \ j = 1,2,3$ (sin ningún orden específico). Considerando que los vértices de $\tr$ son los mismos de $P$, el conjunto de los $n$ vértices de $P$ o de $\tr$ es $V(I) = \bigcup_{T \in I} T$. Además, el conjunto de lados de triángulos que hay en $\tr$ es el conjunto de pares no ordenados $E(I) = \bigcup_{\{ a,b,c \} \in I} \{ (a,b), (a,c), (b,c) \}$.
 
 \medskip
 
-Se pide reconstruir $P$ dando las coordenadas cartesianas de sus vértices ordenados en sentido horario, comenzando por el de menor abscisa y, en caso de haber varios puntos alineados verticalmente en ese valor, de menor ordenada al origen.
+Se pide reconstruir $P$ dando las coordenadas cartesianas de sus vértices ordenados en sentido horario, comenzando por el de menor abscisa y, en caso de haber varios puntos alineados verticalmente en ese valor, el de menor ordenada al origen.
 
 \subsection{Solución}
 
 \subsubsection{Esquema general del algoritmo}
-
-\textcolor{red}{\textbf{Arreglar el tema de si los pares son ordenados o no}}
-
-\bigskip
 
 Nuestra resolución se divide esencialmente en tres pasos:
 
@@ -65,27 +61,31 @@ Nuestra resolución se divide esencialmente en tres pasos:
 \setlength\itemsep{0em}
 \item \textit{(Armado del grafo triangulación)} Construir el grafo de triangulación $\grtr$ de $\tr$.
 \item \textit{(Armado del subgrafo borde)} Identificar el subgrafo de $\grtr$ correspondiente al borde de $P$.
-\item \textit{(Exploración del borde)} Recorrer el borde identificado en el paso anterior en sentido horario comenzando por el nodo requerido.
+\item \textit{(Exploración del borde)} Recorrer el borde identificado en el paso anterior en el sentido correcto comenzando por el nodo requerido.
 \end{enumerate}
 
 Los algoritmos involucrados en estos pasos requieren una relación de orden para los vértices y lados que aparecen en $I$. Se definen las relaciones de orden $\lessv$ para vértices y $\lesse$ para segmentos del plano cartesiano como sigue:
 
 \begin{itemize}
-\item[$( \nu )$] $\forall \ a\!=\!(x_1,y_1), \ b\!=\!(x_2,y_2) \in V(I): a \lessv b \iff x_1 < x_2 \vee (x_1 = x_2 \wedge y_1 < y_2)$.
-\item[$( \sigma )$] $\forall \ s_1\!=\!(a_1,b_1), s_2\!=\!(a_2,b_2) \in E(I): s_1 \lesse s_2 \iff a_1 \lessv a_2 \vee (a_1 = a_2 \wedge b_1 \lessv b_2)$.
+\item[$( \nu )$] $\forall \ a\!=\!(x_1,y_1), \ b\!=\!(x_2,y_2) \in V(I): a \lessv b \iff x_1 < x_2 \ \vee \ (x_1 = x_2 \ \wedge \ y_1 < y_2)$.
+\item[$( \sigma )$] $\forall \ s_1\!=\!(a_1,b_1), s_2\!=\!(a_2,b_2) \in E(I): s_1 \lesse s_2 \iff a_1 \lessv a_2 \ \vee \ (a_1 = a_2 \ \wedge \ b_1 \lessv b_2)$.
 \end{itemize}
 
 \textbf{Observación} \textit{(Punto de comienzo)} Notar que la relación $\lessv$ determina el punto de comienzo del recorrido en sentido horario del borde de $P$ especificado en el enunciado, siendo este el mínimo elemento de $V(I)$ según $\lessv$.
 
+\medskip
+
+Consideramos a partir de ahora a los pares $(a,b) \in E(I)$ ordenados de modo que $a \lessv b$.
+
 \subsubsection{Armado del grafo triangulación}
 
-Por definición del grafo triangulación, hay una biyección entre nodos de $\grtr$ y vértices de $P$ (o $\tr$), y entre aristas de $\grtr$ y lados de de triángulos de $\tr$ tomados sin repeticiones. Para un vértice $v$ de $P$, llamamos $g(v)$ al nodo que le corresponde en $\grtr$, y dado un lado de triángulo $l = (a,b)$ de $\tr$, llamamos $g(l) = (g(a),g(b))$ a su arista correspondiente en $\grtr$. El mapeo inverso se nota $f$, de forma que $f(g(v)) = v$ y $f(g(l)) = l$. Así, el conjunto de vértices del grafo triangulación es $V(\grtr) = \{ g(x) \mid x \in V(I) \}$, y su conjunto de aristas es $E(\grtr) = \{ g(x) \mid x \in E(I) \}$.
+Por definición del grafo triangulación, hay una biyección entre nodos de $\grtr$ y vértices de $P$ (o $\tr$) y entre aristas de $\grtr$ y lados de triángulos de $\tr$ tomados sin repeticiones en el plano cartesiano. Para un vértice $v$ de $P$ en el plano, llamamos $g(v)$ al nodo que le corresponde en $\grtr$, y dado un lado de triángulo $l = (a,b)$ de $\tr$, llamamos $g(l) = (g(a),g(b))$ a su arista correspondiente en $\grtr$. El mapeo inverso se nota $f$, de forma que $f(g(v)) = v$ y $f(g(l)) = l$. Así, el conjunto de vértices del grafo triangulación es $V(\grtr) = \{ g(x) \mid x \in V(I) \}$, y su conjunto de aristas es $E(\grtr) = \{ g(x) \mid x \in E(I) \}$.
 
-Para conseguir el conjunto de aristas, debemos poder capturar a partir de la entrada $I$ el conjunto $E(I) = \bigcup_{\{ a,b,c \} \in I} \{ (a,b), (a,c), (b,c) \}$. Es decir, si comenzamos con un conjunto vacío $\widetilde{C}$, recorremos $I$ y, por cada triángulo $\{ a,b,c \}$, agregamos a $\widetilde{C}$ cada uno de los tres arcos del triángulo correspondiente $(a,b)$, $(a,c)$ y $(b,c)$, obtenemos efectivamente en $\widetilde{C}$ un conjunto de $m$ elementos, uno por lado de triángulo que aparece en $\tr$ sin repeticiones. 
+Para conseguir el conjunto de aristas de $\grtr$, debemos poder capturar a partir de la entrada $I$ el conjunto $E(I) = \bigcup_{\{ a,b,c \} \in I} \{ (a,b), (a,c), (b,c) \}$. Es decir, si comenzamos con un conjunto vacío $\widetilde{C}$, recorremos $I$ y, por cada triángulo $\{ a,b,c \}$, agregamos a $\widetilde{C}$ cada uno de los tres arcos del triángulo correspondiente $(a,b)$, $(a,c)$ y $(b,c)$, obtenemos efectivamente en $\widetilde{C}$ un conjunto de $m$ elementos, uno por lado de triángulo que aparece en $\tr$ sin repeticiones. 
 
-Considerando la observación previamente hecha acerca del borde de un polígono en forma triangulada, podemos afirmar que, al recorrer $I$, cada arco que construyamos conectando vértices de triángulos de $\tr$ aparecerá exactamente una o dos veces. Más aún, podemos decir que los que aparezcan exactamente una vez son lados de $P$. Por ende, nos interesa tener información que el conjunto $\widetilde{C}$ no nos provee acerca de la cantidad de apariciones de cada uno de sus elementos en el recorrido descripto de $I$. Con esta motivación, en vez de utilizar un conjunto, podemos agregar los arcos formados al recorrer $I$ a un multiconjunto de modo que dicha cantidad de apariciones de arcos queda reflejada en él.
+Considerando la observación previamente hecha acerca del borde de un polígono en forma triangulada, podemos afirmar que, al leer los datos de $I$, cada arco que construyamos conectando vértices de triángulos de $\tr$ aparecerá exactamente una o dos veces, y más aún, que los que aparezcan exactamente una vez son lados de $P$. Por ende, nos interesa tener información que el conjunto $\widetilde{C}$ no nos provee acerca de la cantidad de apariciones de cada uno de sus elementos en la lectura descripta de $I$. Con esta motivación, en vez de utilizar un conjunto, podemos agregar los arcos formados al leer $I$ a un multiconjunto, de modo que dicha cantidad de apariciones de arcos quede reflejada en él.
 
-Entonces, representamos $\grtr$ con un multiconjunto $C$ resultante de reunir todos los lados de triángulos que aparecen en $I$, de modo que el conjunto de aristas de $\grtr$ es el conjunto que se obtiene al tomar una sola vez cada elemento de $C$. Además, sabemos que el borde de $P$ está formado por los elementos que aparecen en $C$ con cardinal 1.
+Entonces, representamos a $\grtr$ con un multiconjunto $C$ resultante de reunir todos los lados de triángulos que aparecen en $I$, de modo que el conjunto de aristas de $\grtr$ es el conjunto que se obtiene al tomar una sola vez cada elemento de $C$. Además, sabemos que el borde de $P$ está formado por los elementos que aparecen en $C$ con cardinal 1.
 
 Para este paso se asume que el multiconjunto utilizado puede crearse con un ordenamiento arbitrario para sus elementos y provee inserciones y consultas en tiempo logarítmico en su tamaño. Además, se supone la capacidad de iterar sus elementos con repeticiones en tiempo lineal. En nuestro algoritmo, definimos el orden $\overline{\lesse}$ en $E(\grtr)$ como el orden inducido por $\lesse$ y $f$ de la manera natural, de modo que una arista $x$ de $\grtr$ se considera ``menor que'' otra arista $y$ según $\overline{\lesse}$ si $f(x) \lesse f(y)$.
 
@@ -138,11 +138,11 @@ Para este paso, se asume que el mapa utilizado tiene características similares 
 
 \subsubsection{Exploración del borde}
 
-Teniendo el subgrafo borde $\brtr$ que representa el borde de $P$ a través de $f$, el objetivo de este paso final es realizar el recorrido de los vértices de ese borde en sentido horario en el plano cartesiano empezando por el punto de comienzo especificado en la descripción del problema que denominaremos $p_0$, siendo $v_0 = g(p_0)$ su nodo correspondiente en $\brtr$. Por las características enunciadas de la estructura utilizada para representar $\brtr$, el nodo $v_0$ será el mínimo en $\brtr$ según $\overline{\lessv}$, igual a $p_0$ a través de $f$.
+Teniendo el subgrafo borde $\brtr$ que representa el borde de $P$ a través de $f$, el objetivo de este paso final es realizar el recorrido de los vértices de ese borde en sentido horario en el plano cartesiano empezando por el punto especificado en la descripción del problema que denominaremos $p_0$, siendo $v_0 = g(p_0)$ su nodo correspondiente en $\brtr$. Por las características enunciadas de la estructura utilizada para representar a $\brtr$, el nodo $v_0$ será la mínima clave en $\brtr$ según $\overline{\lessv}$.
 
-Como $\brtr$ es un $C_n$ y teniendo un punto de inicio, para recorrer sus vértices en un sentido específico basta con identificar el segundo nodo $v_1 = g(p_1)$ del recorrido que se quiere realizar para definir inequívocamente su orientación. Este segundo nodo, naturalmente, es un vecino de $v_0$ en $\brtr$. Como $p_0$ según $\lessv$ está igual o más a la izquierda que el resto de los vértices en el dibujo de $P$, cualquiera de sus dos vértices adyacentes en $P$ estará alineado con él verticalmente o a su derecha, por lo que el valor que determina cuál de los dos es el siguiente es su coordenada $y$, y para que el sentido del recorrido sea horario, debe ser el punto con coordenada $y$ mayor. En resumen, para determinar $v_1$, debemos comparar las coordenadas $y$ de los vértices del plano cartesiano que corresponden a través de $g$ a los dos vecinos de $v_0$ en $\brtr$ y elegir al de mayor valor.
+Como $\brtr$ es un $C_n$, dado que ya tenemos un nodo de inicio, poder iterar sus vértices en un sentido específico sólo requiere identificar el segundo nodo $v_1 = g(p_1)$ del recorrido que se quiere realizar para definir inequívocamente su orientación. Este segundo nodo, naturalmente, es uno de los dos vecinos de $v_0$ en $\brtr$. Como $p_0$ según $\lessv$ está igual o más a la izquierda que el resto de los vértices en el dibujo de $P$, cualquiera de sus dos vértices adyacentes en el dibujo de $P$ estará alineado con él verticalmente o a su derecha. Por lo tanto, para determinar cuál de los dos es el siguiente en sentido horario, basta con identificar al que tiene coordenada $y$ mayor. Así, $v_1$ será el vecino de $v_0$ en $\brtr$ cuyo punto correspondiente del plano cartesiano tiene la coordenada $y$ de mayor valor.
 
-Una vez encontrados los dos primeros nodos $v_0$ y $v_1$ de la exploración del borde, el sentido de su recorrido queda determinado. Seguimos el recorrido de $\brtr$ en esa orientación, agregando a la secuencia de salida del algoritmo el punto del plano correspondiente a cada vértice. Utilizamos una estructura adicional de diccionario para marcar como \textit{visitado} a cada vértice cuyo punto en el plano es agregado a la secuencia de salida, de modo de saber, para cada nuevo vértice que se contempla, cuál de sus dos vecinos es el próximo en procesar.
+Una vez encontrados los dos primeros nodos $v_0$ y $v_1$ de la exploración del borde, el sentido de su recorrido queda determinado. Seguimos el recorrido de $\brtr$ en esa orientación, agregando a la secuencia de salida del algoritmo el punto del plano correspondiente a cada vértice. Utilizamos una estructura adicional de diccionario para marcar como \textit{visitado} a cada vértice cuyo punto en el plano es agregado a la secuencia de salida, de modo de saber, para cada nuevo vértice que se contempla, cuál de sus dos vecinos en el mapa de adyacencia que representa $\brtr$ es el próximo en procesar.
 
 Las estructuras de mapa utilizadas son de características similares a las del paso anterior.
 
@@ -174,14 +174,14 @@ Las estructuras de mapa utilizadas son de características similares a las del p
 
 \subsubsection{Algoritmo completo}
 
-Finalmente, el algoritmo en su totalidad reúne como sigue los tres pasos descriptos.
+Finalmente, el algoritmo en su totalidad reúne como sigue los tres pasos explicados.
 
 \bigskip 
 
 \begin{algorithm}[H]
-	\caption{\textit{VérticesEnSentidoHorario}}
+	\caption{\textit{VérticesDeTriangulaciónEnSentidoHorario}}
 	\Input{ Conjunto de triángulos $I$ }
-	\Output{ Secuencia de puntos $S$ }
+	\Output{ Secuencia de puntos cartesianos $S$ }
 
 	$C \gets$ \textit{GrafoDeTriangulación}$(I)$ \\
 	$M \gets$ \textit{SubgrafoBorde}$(C)$ \\
@@ -196,15 +196,15 @@ Finalmente, el algoritmo en su totalidad reúne como sigue los tres pasos descri
 
 \medskip
 
-\textit{\textbf{SubgrafoBorde.}} Se realiza una inicialización en tiempo constante, y luego un ciclo de $|C|$ iteraciones, donde $|C|$ es la cantidad de elementos de $C$ contando sus repeticiones. Como $C$ contiene lados de triángulos que aparecen en $\bar{P}$, tiene $m$ elementos únicos y a lo sumo dos repeticiones por cada uno. Por lo tanto, podemos acotar $|C|$ por $2m$, obteniendo $|C| = O(m) = O(n)$.
+\textit{\textbf{SubgrafoBorde.}} Se realiza una inicialización en tiempo constante, y luego un ciclo de $|C|$ iteraciones, donde $|C|$ es la cantidad de elementos de $C$ contando sus repeticiones. Como $C$ contiene lados de triángulos que aparecen en $\bar{P}$, tiene $m = |E(\grtr)|$ elementos únicos y a lo sumo dos repeticiones por cada uno. Entonces, podemos acotar $|C|$ por $2m$, obteniendo $|C| = O(m) = O(n)$.
 
-En cada iteración se realiza una consulta de cantidad de apariciones del elemento considerado de $C$ en $O(log(|C|)) = O(log(n))$ y, en caso de ser único en $C$, se realizan $O(1)$ definiciones en $M$. Como $|M| = n$ siendo un mapa de adyacencias de un $C_n$, cada una de estas definiciones tarda $O(log(n))$. Por lo tanto, cada iteración lleva $O(log(n)) + O(log(n)) = O(log(n))$. En total, entonces, el ciclo tarda $O(n log(n))$, y es la complejidad de esta etapa del algoritmo.
+En cada iteración se realiza una consulta de cantidad de apariciones del elemento considerado de $C$ en $O(log(|C|)) = O(log(n))$ y, en caso de ser único en $C$, se realizan $O(1)$ definiciones en $M$. Como $|M| = O(n)$ siendo un mapa de adyacencias de un $C_n$, cada una de estas definiciones tarda $O(log(n))$. Por lo tanto, cada iteración lleva $O(log(n)) + O(log(n)) = O(log(n))$. En total, entonces, el ciclo tarda $O(n log(n))$, y esa es la complejidad de esta etapa del algoritmo.
 
 \medskip
 
 \textit{\textbf{ExploraciónDeBorde.}} Las líneas \texttt{1} y \texttt{7} conllevan un costo constante siendo una la inicialización de una secuencia vacía y otra la asignación a una variable de un vértice. En la línea \texttt{2} se inicializa al mapa $V$ con $n$ elementos asociados a $false$, con un costo $O(n log (n))$. Luego se obtiene el mínimo elemento de $M$ en tiempo constante, se le asocia \textit{verdadero} en $V$ en tiempo $O(log(|V|)) = O(log(n))$ y se consulta en $M$ por sus vecinos en el borde que son exactamente $2 = O(1)$. Se realiza una comparación de sus valores de coordenada $y$ en $O(1)$ y se asigna a $v_1$ con la misma complejidad. En total, las primeras 7 líneas del algoritmo suman un costo de $O(n log(n)) + O(log(n)) = O(n log(n))$.
 
-El ciclo que sigue itera $O(n)$ veces. En cada iteración se agrega primero un elemento a $S$ en tiempo constante y se realiza después una definición en $V$ en tiempo $O(log(n))$. Luego, para elegir el siguiente vértice, se realiza una consulta a $M$ por el valor de $v_{\mathit{curr}}$ en $O(log(n))$ y luego, a lo sumo una vez por cada uno de sus \textit{dos} vecinos en el borde, una consulta a $V$ que también implica un costo logarítmico en $n$. Por lo tanto, cada iteración del ciclo tarda $O(1) + O(log(n)) + 3O(log(n)) = O(log(n))$. El costo completo incurrido por el cicl ode las líneas 8-12 es, entonces, O(nlog(n)), dando un costo total de este paso del algoritmo de $O(n log(n)) + O(n log(n)) = O(nlog(n))$.
+El ciclo que sigue itera $O(n)$ veces. En cada iteración se agrega primero un elemento a $S$ en tiempo constante y se realiza después una definición en $V$ en tiempo $O(log(n))$. Luego, para elegir el siguiente vértice, se realiza una consulta a $M$ por el valor de $v_{\mathit{curr}}$ en $O(log(n))$ y luego, a lo sumo una vez por cada uno de sus \textit{dos} vecinos en el borde, una consulta a $V$ que también implica un costo logarítmico en $n$. Por lo tanto, cada iteración del ciclo tarda $O(1) + O(log(n)) + 3O(log(n)) = O(log(n))$. El costo completo incurrido por el ciclo de las líneas 8-12 es, entonces, $O(nlog(n))$, dando un costo total de este paso del algoritmo de $O(n log(n)) + O(n log(n)) = O(nlog(n))$.
 
 \medskip
 
@@ -212,11 +212,31 @@ Como el algoritmo en su enteridad consiste en una invocación a cada uno de esto
 
 \subsubsection{Detalles de implementación}
 
-El programa presentado para implementar este algoritmo está escrito en C++. Los puntos del plano se representan mediante el \texttt{struct point} y los segmentos mediante el \texttt{struct edge}. A ambas estructuras se les implementa el orden descripto. Las instancias de \texttt{edge} se construyen siempre como pares ordenados, teniendo en su primera componente un punto menor que el de la segunda según el orden de puntos.
+El programa presentado para implementar este algoritmo está escrito en C++. Los puntos del plano se representan mediante el \texttt{struct point} y los segmentos mediante el \texttt{struct edge}. A ambas estructuras se les implementa el orden descripto. Las instancias de \texttt{edge} se construyen siempre como pares ordenados, teniendo en su primera componente un punto menor que el de la segunda según el orden de puntos. De esta forma, comparar dos ejes \texttt{\{a1,b1\}} y \texttt{\{c1,d1\}} por igualdad se reduce comparar por igualdad \texttt{a1} con \texttt{a2} y \texttt{b1} con \texttt{b2}. Notar que esto se hace para facilitar la implementación; los grafos representados por las estructuras que usan elementos de este tipo siguen considerándose no-orientados.
 
 La estructura de multiconjunto y la de mapa se implementan utilizando \texttt{multiset} y \texttt{map} de la librería estándar de C++ respectivamente, que cumplen los requisitos de complejidad enunciados de acuerdo a la documentación del lenguaje.
 
-Como se explicó al describir los algoritmos, el grafo $\grtr$ se representa como un multiconjunto de sus ejes y $\brtr$ con un mapa de adyacencias. Ambos grafos tienen como vértices en la implementación valores de tipo \texttt{point}, y como ejes valores de tipo \texttt{edge}. Es decir, las biyecciones utilizadas en la descripción del algoritmo $g$ y $f$ son meramente conceptuales, y en la implementación propiamente dicha no son necesarias, pudiendo utilizar para estos grafos directamente valores de los tipos \texttt{point} y \texttt{edge} para sus nodos y aristas, los mismos usados para representar los puntos del plano cartesiano. En particular, esto quiere decir que el uso de $f$ y $g$ en el pseudocódigo exhibido no afecta en el cálculo de la complejidad y puede considerarse $O(1)$.
+Como se explicó al describir los algoritmos, el grafo $\grtr$ se representa como un multiconjunto de sus ejes y $\brtr$ con un mapa de adyacencias. Ambos grafos tienen como vértices en su implementación valores de tipo \texttt{point}, y como ejes valores de tipo \texttt{edge}. Es decir, las biyecciones $g$ y $f$ utilizadas en la descripción del algoritmo son de carácter meramente conceptual, y en la implementación propiamente dicha no son necesarias pudiendo utilizar para estos grafos directamente valores de los tipos \texttt{point} y \texttt{edge} para sus nodos y aristas, los mismos usados para representar los puntos y segmentos del plano cartesiano. En particular, esto quiere decir que el uso de $f$ y $g$ en el pseudocódigo exhibido no afecta en el cálculo de la complejidad y puede considerarse $O(1)$ en todos los casos.
+
+\newpage
 
 \subsection{Casos de prueba}
+
+Se utilizaron instancias de prueba generadas manualmente que corresponden a las siguientes familias de instancias:
+
+\begin{itemize}
+\setlength\itemsep{0em}
+
+\item Casos de $n$ mínimo, i.e triángulos.
+\item Polígonos convexos triangulados de distintas formas.
+\item Polígonos cóncavos triangulados de distintas formas.
+\item Polígonos con varios vértices de menor abscisa, i.e casos en los que hay que ``desempatar'' el punto de comienzo del recorrido.
+
+\end{itemize}
+
+Notar que, en particular, los ejemplos dados en el enunciado corresponden a estas familias: el primero es convexo y tiene dos vértices de menor abscisa, el segundo es un triángulo y el tercero es cóncavo.
+
+\medskip
+
+Además, se testeó el programa con casos de la dimensión sugerida en el enunciado como máxima para verificar el funcionamiento correcto de la implementación en el límite de tamaño de entrada. El código entregado incluye una función que genera un tal caso, en el que el polígono triangulado consiste en unir cuadrados de tamaño $1 \times 1$ verticalmente y triangularlos trazando una diagonal en cada uno. La salida esperada en ese caso es simplemente el recorrido de los vértices ``izquierdos'' (de menor abscisa) de abajo hacia arriba y luego los ``derechos'' (de mayor absicsa) de arriba hacia abajo.
 

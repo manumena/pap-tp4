@@ -12,6 +12,10 @@ vector<test_case_input> cases_filenames = {
     {CASE_DIR + "ejemplo1.dat", CASE_DIR + "ejemplo1.exp"},
     {CASE_DIR + "ejemplo2.dat", CASE_DIR + "ejemplo2.exp"},
     {CASE_DIR + "ejemplo3.dat", CASE_DIR + "ejemplo3.exp"},
+    {CASE_DIR + "recontra_convexo_tr1.dat", CASE_DIR + "recontra_convexo_tr1.exp"},
+    {CASE_DIR + "recontra_convexo_tr2.dat", CASE_DIR + "recontra_convexo_tr2.exp"},
+    {CASE_DIR + "recontra_concavo.dat", CASE_DIR + "recontra_concavo.exp"},
+    {CASE_DIR + "triangulito_gigante_negativo.dat", CASE_DIR + "triangulito_gigante_negativo.exp"},
 };
 
 vector<point> read_expected(size_t n, istream& f) {
@@ -49,7 +53,7 @@ void load_test() {
     }
 
     /******* Create expected result *******/
-    // print left side of tower
+    // upward walk of left side of tower
     vector<point> expected;
     point p;
     for (int i = 0; i <= total_squares; ++i) {
@@ -57,7 +61,7 @@ void load_test() {
         expected.push_back(p);
     }
 
-    // print right side of tower
+    // downward walk of right side of tower
     for (int i = total_squares; i >= 0; --i) {
         p = {1,i};
         expected.push_back(p);
@@ -66,15 +70,14 @@ void load_test() {
     /******* Solve and test *******/
     ifstream input_load_case(test_file_path);
 
-    multiset<edge> es = read_triangulation_graph(MAX_INPUT_SIZE, input_load_case);
+    size_t n;
+    input_load_case >> n; // (consume first line of input file)
+
+    multiset<edge> es = read_triangulation_graph(n, input_load_case);
     adj_map cn = get_border_subgraph(es);
     vector<point> obtained = sequence_border_vertices_clockwise(cn);
 
     remove(test_file_path.c_str());
-
-    // cout << endl;
-    // print_border_vertex_sequence(obtained, cout);
-    // print_border_vertex_sequence(expected, cout);
 
     ASSERT(obtained == expected);
 }
@@ -84,6 +87,8 @@ void run_unit_tests() {
         auto file_case = [&c] () {
             ifstream input_file(c.input_filename);
             ifstream expected_file(c.expected_filename);
+
+            cout << " " << c.input_filename << " ";
 
             size_t n;
             input_file >> n;

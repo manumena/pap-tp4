@@ -1,3 +1,164 @@
 \section{Ejercicio 2}
 
-Peso asignado: 8.
+Peso asignado: X.
+
+\subsection{Introducción}
+
+Se tiene un arreglo de $N$ enteros y se desea ordenarlo en BigTalk. El
+lenguaje es capaz de permutar aleatoriamente los últimos $N - i$ númneros del
+arreglo, siendo todas las posibles permutaciones equiprobables.
+
+El objetivo del problema es obtener ese arreglo y calcular cuánto tardaría en
+ordenarse con un programa en Bigtalk que haga lo siguiente:
+
+\begin{enumerate}
+\item Se comienza con $i = 0$ y el arreglo $A$ de tamaño $N$ dado en la
+entrada
+\item Se permuta al azarel arreglo $A[i..N)$
+\item Mientras que $i$ sea menor a $N$ y el menor elemento de $A[i..N)$ sea
+$A[i]$ se incrementa $i$ en 1
+\item Si $i < N$ se vuelve al paso 2
+\end{enumerate}
+
+Para calcular cuánto tarda el algoritmo se debe contar la cantidad de veces
+que se repite el paso 2 ya que el tiempo consumido en el resto de los pasos es
+despreciable, por lo que se hace enfoque en contar cuántas veces se permuta un
+sufijo de $A$ aleatoriamente. Debido al azar presente, la cantidad de
+repeticiones necesarias para ordenar el arreglo no es posible de determinar
+con exactitud, por lo que se pide calcular la esperanza.
+
+\subsection{Solución}
+
+\subsubsection{Explicación}
+
+Se quiere calcular la esperanza de la cantidad de veces que se repite el paso
+2 al correr el algoritmo en BigTalk previamente mencionado. Sea $P$ la
+cantidad de veces que se repite el paso 2 y $P_i$ la cantidad de veces que se
+repite el paso 2 en la iteración $i$ con $0 \leq i < N$, puede decirse que
+$P = \sum_{i = 0}^{N}{P_i}$. En consecuencia,
+$E(P) = E(\sum_{i = 0}^{N}{P_i})$, siendo $E(P)$ la esperanza de $P$.
+
+Debido a la linealidad de la esperanza se sabe que
+$E(X_1 + ... + X_n) = E(X_1) + ... = E(X_n)$ por lo que
+$E(\sum_{i = 0}^{N}{P_i}) = \sum_{i = 0}^{N}{E(P_i)}$.
+
+$P_i$ es la cantidad de veces que se repite el paso 2 en la iteración $i$, que
+es lo mismo que la cantidad de veces que se permutan aleatoriamente los
+valores de $A[i..N)$. En cada iteración, la cantidad de veces que se repite el
+paso 2 será la cantidad de veces que se permute el subarreglo hasta que el
+mínimo elemento quede en la posición $i$. La probabilidad de que esto ocurra
+es igual a la cantidad de veces que se repite el mínimo en $A[i..N)$ dividido
+la cantidad de elemento del subarreglo, es decir
+$p_i = \frac{\#min(A[i..N))}{N - i}$, ya que las permutaciones son
+aleatoriamente distribuídas de manera uniforme; o sea que todas las
+permutaciones tienen la misma probabilidad.
+
+Puede verse que $P_0$, es decir en la primer iteración, se comporta como una
+variable aleatoria Geométrica. $P_0$ es la cantidad de repeticiones hasta el
+primer éxito, en este caso es conseguir que el mínimo valor se sitúe en la
+primer posición. Entonces $P_0$ es una Geométrica de parámetro
+$p_0 = \frac{\#min(A)}{N}$. Entonces
+$E(P_0) = \frac{1}{p_0} = \frac{N}{\#min(A)}$.
+
+Esto no ocurre con el resto de las iteraciones, ya que existe la probabilidad
+de que en la iteración anterior, cuando el minimo del subarreglo actual haya
+caído en la posición correspondiente. Es decir que se haya cumplido que el
+mínimo de la iteración $i$ caiga en la posición $i$ y que además el siguiente
+mínimo haya caído en la $i + 1$. Para abordar el resto de las iteraciones se
+define entonces un función de probabilidad puntual que determina cuál es la
+probabilidad de que se repita el paso 2 una $x$ cantidad de veces con
+$x \geq 0$.
+
+La probabilidad puntual de $A_i$ es entonces $p_{A_i} = p (1 - p)^x$ con
+$i \geq 0$ y $p = \frac{\#min(A[i..N))}{N - i}$.
+
+Solamente resta calcular la esperanza de $A_i$ y con eso se tiene la esperanza
+total del algoritmo.
+
+Sea $q = (1 - p)$
+
+\[ \begin{aligned}
+    E(A_i)  &= \sum_{x = 0}^{\infty}{x p q^x} \\
+    		&= p \sum_{x = 0}^{\infty}{x q^x} \\
+    		&= p \sum_{x = 0}^{\infty}{\left( \frac{\partial q^{x + 1}}{\partial q} - q^x \right)} \\
+    		&= p \left( \sum_{x = 0}^{\infty}{\frac{\partial q^{x + 1}}{\partial q}} - \sum_{x = 0}^{\infty}{q^x} \right) \\
+    		&= p \left( \frac{\partial \sum_{x = 0}^{\infty}{q^{x + 1}}}{\partial q} - \sum_{x = 0}^{\infty}{q^x} \right) \\
+    		&= p \left( \frac{\partial (q \sum_{x = 0}^{\infty}{q^x})}{\partial q} - \sum_{x = 0}^{\infty}{q^x} \right) \\
+    		&= p \left( \frac{\partial \frac{q}{1 - q}}{\partial q} - \frac{1}{1 - q} \right) \\
+    		&= p \left( \frac{1}{(1 - q)^2} - \frac{1}{1 - q} \right) \\
+    		&= p \left( \frac{1}{(1 - q)^2} - \frac{1 - q}{(1 - q)^2} \right) \\
+    		&= \frac{pq}{(1 - q)^2} \\
+    		&= \frac{q}{p} \\
+    		&= \frac{1 - p}{p} \\
+    		&= \frac{1}{p} - 1 \\
+\end{aligned} \]
+
+De esta forma queda que $E(A_i) = \frac{N - i}{\#min(A[i..N))} - 1$
+
+Finalmente para calcular la esperanza total del algoritmo se suma la esperanza
+de la Geométrica que describe la primer iteración con el resto de las
+esperanzas de las iteraciones siguientes. Para ello es necesario calcular
+cada esperanza por separado, calculando la cantidad de veces que se repite el
+mínimo en el subarreglo.
+
+\subsubsection{Detalles implementativos}
+
+El algoritmo es muy sencillo, consiste en un bucle de $N$ iteraciones en
+donde en cada iteracion se cuenta la cantidad de veces que se repite el
+elemento de mínimo valor en el subarreglo $A[i..N)$ de manera lineal.
+
+\bigskip
+
+\begin{algorithm}[H]
+	\caption{\textit{esperanza}}
+	\Input{ Arreglo de enteros $A$ }
+	\Output{ Doble $esperanza$ }
+
+	$e \gets$ $A$.tamaño() $/$ cantMin($A$) \;
+
+    \For {$i = 0$ hasta $i = A$.tamaño()} {
+		$e \gets e + (A$.tamaño() $- i) /$ cantMin($A[i..N)$) $- 1$ \;
+	}
+
+	\Return{e}
+\end{algorithm}
+
+\bigskip
+
+\begin{algorithm}[H]
+	\caption{\textit{cantMin}}
+	\Input{ Arreglo de enteros $A$ }
+	\Output{ Entero $cant$ }
+
+	$cant \gets 1$ \;
+	$min \gets A[0]$ \;
+
+    \For {$i = 1$ hasta $i = A$.tamaño()} {
+    	\If {$A[i] = min$} {
+    		$cant++$ \;
+    	}
+    	\If {$A[i] < min$} {
+			$min \gets A[i]$ \;
+    		$cant \gets 1$ \;
+    	}
+	}
+
+	\Return{cant}
+\end{algorithm}
+
+\bigskip
+
+\subsubsection{Complejidad temporal}
+
+El algoritmo consta de dos ciclos anidados de $\ord(N)$ iteraciones donde cada
+otra instruccíon es de tiempo constante por lo que la complejidad temporal
+total es $\ord(N^2)$.
+
+\subsection{Casos de prueba}
+
+\begin{itemize}
+\item Se probaron los casos proporcionados por la cátedra
+\item Casos con arreglos sin elementos iguales
+\item Casos con arreglos con muchos elementos iguales
+\item Casos con arreglos con todos los elementos iguales
+\end{itemize}
