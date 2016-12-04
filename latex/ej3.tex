@@ -300,9 +300,9 @@ toma el punto para el que se formará el \textit{Convex Hull} buscado (porque se
 	            \For {cada $k$ de 0 a $j-1$} {
 	                int hk = $valid\_historical\_places$[k] \\
 	                Punto r = $historical\_places$[hj] \\
-	                Punto p = $historical\_places$[hi] \\
+	                Punto s = $historical\_places$[hi] \\
 	                Punto q = $historical\_places$[hk] \\
-	                bool $sigue\_convexo$ = (p-r) $\times$ (q-r) $>$ 0 \\
+	                bool $sigue\_convexo$ = (s-r) $\times$ (q-r) $>$ 0 \\
 	                bool $sin\_enemigos$ = $enemy\_places\_in\_triangle$[$ref\_point$][hj][hk] == 0 \\
 	                \If {$sigue\_convexo$ \&\& $sin\_enemigos$}{
 						$dp$[i][j] = max($dp$[i][j], $h\_places$ + $dp$[j][k] - 2)
@@ -330,21 +330,21 @@ Como paso siguiente, se crea el vector bidimencional $dp$ que para $i > j$, $dp[
 puntos históricos que podemos tener en el polígono convexo triangulado sin contener enemigos, si
 ese triángulo es el primero que agregamos (y solo agregamos triángulos en sentido horario).
 
-De esa manera, y como fue explicado antes, entre las líneas 6-26 rellenamos $dp$ tal que:
+De esa manera, y como fue explicado antes, entre las líneas 6-26 rellenamos $dp$ tal que, sean 
+$hvi = historical\_places[valid\_historical\_places[i]]$ y $hvj = historical\_places[valid\_historical\_places[j]]$:
 \begin{equation*}
 \begin{split}
-    dp[i][j] & = \#\{ puntos\;historicos \in Triangulo(<P,valid\_historical\_places[i],valid\_historical\_places[j]>)\} + 3 + \\
+    dp[i][j] & = \#\{ puntos\;historicos \in Triangulo(<P, hvi, hvj>)\} + 3 + \\
     & \max_{ k : j > k \cap valido(i,j,k) } \{dp[j][k]-2\}
 \end{split}
 \end{equation*}
 
 Donde $valido(t,j,k)$ es verdadero si y solo si:
 \begin{itemize}
-\item El triángulo generado por $<P, valid\_historical\_places[j], valid\_historical\_places[k]>$ no contiene edificios enemigos
-cosa que se chequea en la línea 19.
-\item Al unir el triángulo $<P, valid\_historical\_places[i], valid\_historical\_places[j]>$ al \\
-$<P, valid\_historical\_places[j], valid\_historical\_places[k]>$, el polígono sigue siendo convexo
-(lo cual comprobamos en la línea 18).
+\item Sean $hvi = historical\_places[valid\_historical\_places[i]]$, $hvj = historical\_places[valid\_historical\_places[j]]$ y
+$hvk = historical\_places[valid\_historical\_places[k]]$.
+\item El triángulo generado por $<P, hvj, hvk>$ no contiene edificios enemigos cosa que se chequea en la línea 19.
+\item Al unir el triángulo $<P, hvi, hvj>$ al $<P, hvj, hvk>$, el polígono sigue siendo convexo (lo cual comprobamos en la línea 18).
 \end{itemize}
 
 Finalmente devolvemos $\max_{i,j}\{dp[i][j]\}$, es decir, la cantidad de puntos históricos del \textit{Convex Hull} a partir de $P$
