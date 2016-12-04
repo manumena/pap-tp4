@@ -66,8 +66,9 @@ puntos históricos se van agregando. A su vez, como cualquier triángulo puede c
 con obtener un \textit{Convex Hull} para todos los puntos, sino que vamos a ir agregando triángulos gradualmente.
 
 Como cada triángulo se determina mediante los dos puntos históricos diferentes a $P$, guardamos en un arreglo 
-bidimensional $dp$ la máxima cantidad de puntos históricos que podemos tener sin contener enemigos en el polígono, si ese triángulo es el primero que agregamos (y solo agregamos triángulos en sentido horario). De esa manera, vamos chequeando
-si se pueden agregar vértices con un índice menor:
+bidimensional $dp$ la máxima cantidad de puntos históricos que podemos tener sin contener enemigos en el polígono, si 
+ese triángulo es el primero que agregamos (y solo agregamos triángulos en sentido horario). De esa manera, vamos 
+chequeando si se pueden agregar vértices con un índice menor:
 
 \centerline{\includegraphics[scale=0.7]{img/ej35.png}}
 
@@ -313,6 +314,41 @@ toma el punto para el que se formará el \textit{Convex Hull} buscado (porque se
 
     \Return{$\max_{i,j}\{$dp$[i][j]\}$}
 \end{algorithm}
+
+Como fue explicado anteriormente, se quiere armar un \textit{Convex Hull} como si el punto con índice $ref\_point$
+(que llamamos $P$) fuera el de más abajo y de entre ellos el de más a la izquierda.
+
+Primero se filtran los puntos históricos que están arriba o tiene igual coordenada $y$ y mayor $x$ y se los guarda en 
+el vector $valid\_historical\_places$.
+
+Luego, de la misma manera que el Graham Scan se ordenan esos puntos según el ángulo que forman con $P$ (notar que no
+hay dos con el mismo ángulo porque se garantiza que no hay tres vértices alineados). Esto se hace como en cualquier
+algoritmo de ordenamiento pero definiendo el orden de manera que dos puntos $Q, R$ cumplen $Q < R$ si y solo si
+$(Q-P) \times (R-P) > 0$. De esa manera ordenamos de menor a mayor para obtener los puntos en sentido antihorario.
+
+Como paso siguiente, se crea el vector bidimencional $dp$ que para $i > j$, $dp[i][j]$ contiene la máxima cantidad de 
+puntos históricos que podemos tener en el polígono convexo triangulado sin contener enemigos, si
+ese triángulo es el primero que agregamos (y solo agregamos triángulos en sentido horario).
+
+De esa manera, y como fue explicado antes, entre las líneas 6-26 rellenamos $dp$ tal que:
+\begin{equation*}
+\begin{split}
+    dp[i][j] & = \#\{ puntos\;historicos \in Triangulo(<P,valid\_historical\_places[i],valid\_historical\_places[j]>)\} + 3 + \\
+    & \max_{ k : j > k \cap valido(i,j,k) } \{dp[j][k]-2\}
+\end{split}
+\end{equation*}
+
+Donde $valido(t,j,k)$ es verdadero si y solo si:
+\begin{itemize}
+\item El triángulo generado por $<P, valid\_historical\_places[j], valid\_historical\_places[k]>$ no contiene edificios enemigos
+cosa que se chequea en la línea 19.
+\item Al unir el triángulo $<P, valid\_historical\_places[i], valid\_historical\_places[j]>$ al \\
+$<P, valid\_historical\_places[j], valid\_historical\_places[k]>$, el polígono sigue siendo convexo
+(lo cual comprobamos en la línea 18).
+\end{itemize}
+
+Finalmente devolvemos $\max_{i,j}\{dp[i][j]\}$, es decir, la cantidad de puntos históricos del \textit{Convex Hull} a partir de $P$
+sin enemigos que contiene la máxima cantidad de puntos históricos.
 
 \subsubsection{Complejidad}
 
