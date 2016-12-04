@@ -106,9 +106,9 @@ int calculate_max_historical_places(int ref_point) {
             for (int k = 0; k < j; ++k) {
                 int hk = valid_historical_places[k];
                 Point r = historical_places[hj];
-                Point p = historical_places[hi];
+                Point s = historical_places[hi];
                 Point q = historical_places[hk];
-                bool keeps_convex = has_closed_orientation(r, p, q);
+                bool keeps_convex = has_closed_orientation(r, s, q);
                 bool no_enemies = enemy_places_in_triangle[ref_point][hj][hk] == 0;
                 if (keeps_convex && no_enemies)
                     dp[i][j] = max(dp[i][j], h_places + dp[j][k] - 2);

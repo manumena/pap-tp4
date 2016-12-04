@@ -366,9 +366,10 @@ Entonces todo esto tiene una complejidad de $O(1+H+V+V*+H*log(H)) = H*log(H)$
 $enemy\_places\_in\_triangle[ref\_point][hi][hj]$ y hace dos asignaciones en $h\_places$ y $dp[i][j]$. Además para cada
 $k$ entre 0 y $j-1$ entre las líneas 11 y 22 hace varias comparaciones y asignaciones, pero todas de complejidad constante.
 Todo esto tiene una complejidad de $O(H*(1+H*(1+H*1))) = O(H^3)$
+\item Busca el máximo de $dp$, que es un vector bidimencional de $V \times V$. Complejidad $O(V^2) = O(H^2)$
 \end{itemize}
 
-Entonces sumando todo MaximosPuntosHistoricosDesde es $O(H*log(H)+H^3) = O(H^3)$.
+Entonces sumando todo MaximosPuntosHistoricosDesde es $O(H*log(H)+H^3+H^2) = O(H^3)$.
 
 Finalmente, el algoritmo principal, MaximosPuntosHistoricosEnMurallaConvexa:
 
