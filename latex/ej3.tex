@@ -352,4 +352,36 @@ sin enemigos que contiene la máxima cantidad de puntos históricos.
 
 \subsubsection{Complejidad}
 
+Los algoritmos de las clases Punto, Segmento y Triángulo tienen todos complejidad $O(1)$ ya que solo hacen asignaciones y
+comparaciones y la cantidad de operaciones es siempre fija.
+
+El algoritmo MaximosPuntosHistoricosDesde:
+
+\begin{itemize}
+\item Declara un punto $P$, un vector $valid\_historical\_places$ filtrando $historical\_places$ (de tamaño $H$),
+un int $V$, un vector bidimencional $dp$ de tamaño $V \times V$ y ordena $valid\_historical\_places$. Como $V$ es el tamaño
+del vector resultante de filtrar $historical\_places$, $V \leq H$.
+Entonces todo esto tiene una complejidad de $O(1+H+V+V*+H*log(H)) = H*log(H)$
+\item Para cada $i$ entre 0 y $H-1$ y para cada $j$ entre 0 y $i-1$: declara los ints $hi$ y $hj$, se fija el valor de \\
+$enemy\_places\_in\_triangle[ref\_point][hi][hj]$ y hace dos asignaciones en $h\_places$ y $dp[i][j]$. Además para cada
+$k$ entre 0 y $j-1$ entre las líneas 11 y 22 hace varias comparaciones y asignaciones, pero todas de complejidad constante.
+Todo esto tiene una complejidad de $O(H*(1+H*(1+H*1))) = O(H^3)$
+\end{itemize}
+
+Entonces sumando todo MaximosPuntosHistoricosDesde es $O(H*log(H)+H^3) = O(H^3)$.
+
+Finalmente, el algoritmo principal, MaximosPuntosHistoricosEnMurallaConvexa:
+
+\begin{itemize}
+\item Declara dos vectores tridimecionales de tamaño $H \times H \times H$. Complejidad $O(H^3)$
+\item Para cada $i,j,k$ diferentes entre 0 y $H-1$: declara tres puntos $pi,pj,pk$, para cada $l$ entre 0 y $H-1$
+realiza comparaciones y asignaciones constantes entre las líneas 8-11 y para cada $l$ entre 0 y $E-1$
+realiza comparaciones y asignaciones constantes entre las líneas 14-17. Complejidad $O(H^3*(1+H+E)) = O(H^3*(H+E))$
+\item Declara un int $ans$ y para cada $i$ entre 0 y $H-1$ hace un llamado a la función MaximosPuntosHistoricosDesde que como
+se vio anteriormente es $O(H^3)$. Entonces esto tiene complejidad $O(H^4)$.
+\end{itemize}
+
+Teniendo en cuenta que $N = H+E$ y entonces $H \leq N$ y $E \leq N$, la complejidad total de MaximosPuntosHistoricosEnMurallaConvexa
+es: $O(H^3+H^3*(H+E)+H^4) = O(N^3+N^4+N^4) = O(N^4)$.
+
 \subsection{Casos de test}
