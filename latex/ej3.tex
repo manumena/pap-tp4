@@ -4,8 +4,8 @@ Peso asignado: 8.
 
 \subsection{Problema}
 
-Se presenta una situación en la cual se tiene una cantidad \textbf{H} de puntos en un espacio bidimencional
-$<xh_1,yh_1>,...,<xh_H,yh_H>$ de edificios historicos de una ciudad y \textbf{E} puntos de edificios
+Se presenta una situación en la cual se tiene una cantidad \textbf{H} de puntos en un espacio bidimensional
+$<xh_1,yh_1>,...,<xh_H,yh_H>$ de edificios históricos de una ciudad y \textbf{E} puntos de edificios
 enemigos $<xe_1,ye_1>,...,<xe_E,ye_E>$.
 
 Dados esos parámetros de entrada se quiere calcular la máxima cantidad de puntos históricos que podría cubrir
@@ -102,13 +102,13 @@ En esta sección se detallarán las clases y los métodos importantes de la solu
 
 \subsubsection*{Clase punto}
 
-Un Punto contendrá sus coordenadas $x,y$ ya que trabajamos sobre un espacio bidimencional. Asi mismo definimos
+Un Punto contendrá sus coordenadas $x,y$ ya que trabajamos sobre un espacio bidimensional. Así mismo definimos
 la igualdad de puntos por la igualdad de sus coordenadas. La suma y resta de puntos se define como la suma y resta
 de sus coordenadas respectivamente. El producto crus $P \times Q = P_x * Q_y - Q_x * P_y$.
 
 \subsubsection*{Clase segmento}
 
-Un segmento contendrá simplemente un Punto origen $a$ y un Punto destino $b$. Asi se definen las funciones:
+Un segmento contendrá simplemente un Punto origen $a$ y un Punto destino $b$. Así se definen las funciones:
 
 \begin{algorithm}[H]
 	\caption{\textit{ContieneSegmentoPunto}}
@@ -224,10 +224,10 @@ en el que el punto sea uno de los vértices del triángulo).
 	\Input{ int $H$, int $E$, $vector<int>$ $historical\_places$, $vector<int>$ $enemy\_places$ }
 	\Output{ int }
 
-	$vector<vector<vector<int>>>$ $historical\_places\_in\_triangle$ = vector tridimencional de $H \times H \times H$ \\
-	$vector<vector<vector<int>>>$ $enemy\_places\_in\_triangle$ = vector tridimencional de $H \times H \times H$
+	$vector<vector<vector<int>>>$ $historical\_places\_in\_triangle$ = vector tridimensional de $H \times H \times H$ \\
+	$vector<vector<vector<int>>>$ $enemy\_places\_in\_triangle$ = vector tridimensional de $H \times H \times H$
 
-	\For {cada tripla de int $i,j,k$ diferentes entre 0 y $H-1$} {
+	\For {cada int $i,j,k$ diferentes entre 0 y $H-1$} {
         Punto $pi$ = $historical\_places$[i] \\
         Punto $pj$ = $historical\_places$[j] \\
         Punto $pk$ = $historical\_places$[k] \\
@@ -259,15 +259,15 @@ de los mismos.
 Con ellos, calcula y devuelve la máxima cantidad de puntos históricos que puede contener una
 muralla convexa sin edificios enemigos dentro.
 
-El algoritmo comienza declarando dos vectores tridimencionales $historical\_places\_in\_triangle$ y \\
+El algoritmo comienza declarando dos vectores tridimensionales $historical\_places\_in\_triangle$ y \\
 $enemy\_places\_in\_triangle$ que contendrán para cada tripla de puntos diferentes, la cantidad de puntos históricos
 y la cantidad de puntos enemigos dentro del triángulo que determina la tripla.
 Luego el \textit{For} de las líneas 3-19 se encarga justamente de tomar triplas de tres puntos diferentes,
-crear un triángulo y fijarse para cada punto histórico y edificio enemigo si está contenido en el triángulo, asi
+crear un triángulo y fijarse para cada punto histórico y edificio enemigo si está contenido en el triángulo, así
 calculando los valores de los dos vectores.
 
-La línea 20 inicializa $ans$ como min(2, $H$) por el caso de que hayan menos de tres puntos hitóricos en la ciudad
-y entonces se tenga que contruir una muralla para 0, 1 ó 2 puntos históricos (cosa que siempre es posible).
+La línea 20 inicializa $ans$ como min(2, $H$) por el caso de que hayan menos de tres puntos históricos en la ciudad
+y entonces se tenga que construir una muralla para 0, 1 ó 2 puntos históricos (cosa que siempre es posible).
 
 Finalmente el \textit{For} de las líneas 21-23 calcula para cada punto histórico, la respuesta al problema
 si es que la muralla fuera armada a partir de ese punto uniéndolo mediante triángulos a otros puntos históricos
@@ -281,14 +281,14 @@ toma el punto para el que se formará el \textit{Convex Hull} buscado (porque se
 	\caption{\textit{MaximosPuntosHistoricosDesde}}
 	\Input{ int $ref\_point, $int $H$, int $E$, $vector<int>$ $historical\_places$, $vector<int>$ $enemy\_places$ }
 	\Output{ int }
-	Punto p = $historical\_places$[$ref\_point$] \\
+	Punto P = $historical\_places$[$ref\_point$] \\
 
     $vector<int>$ $valid\_historical\_places$ = \{ $i$ : $i$ entre 0 y $H-1$ y cumple que $historical\_places$[i] está más arriba que $p$ o tiene la misma coordenada $y$ pero mayor coordenada $x$ \} \\
     
     Ordenar $valid\_historical\_places$ según el ángulo de los puntos capturados con $P$ en sentido antihorario \\
     
     int V = $valid\_historical\_places$.size() \\
-    $vector< vector<int> > dp$ = vector bidimencional relleno de 0 de tamaño $V \times V$ \\
+    $vector< vector<int> > dp$ = vector bidimensional relleno de 0 de tamaño $V \times V$ \\
 
     \For {cada $i$ de 0 a $V-1$} {
         int hi = $valid\_historical\_places$[i] \\
@@ -326,7 +326,7 @@ hay dos con el mismo ángulo porque se garantiza que no hay tres vértices aline
 algoritmo de ordenamiento pero definiendo el orden de manera que dos puntos $Q, R$ cumplen $Q < R$ si y solo si
 $(Q-P) \times (R-P) > 0$. De esa manera ordenamos de menor a mayor para obtener los puntos en sentido antihorario.
 
-Como paso siguiente, se crea el vector bidimencional $dp$ que para $i > j$, $dp[i][j]$ contiene la máxima cantidad de 
+Como paso siguiente, se crea el vector bidimensional $dp$ que para $i > j$, $dp[i][j]$ contiene la máxima cantidad de 
 puntos históricos que podemos tener en el polígono convexo triangulado sin contener enemigos, si
 ese triángulo es el primero que agregamos (y solo agregamos triángulos en sentido horario).
 
@@ -359,14 +359,14 @@ El algoritmo MaximosPuntosHistoricosDesde:
 
 \begin{itemize}
 \item Declara un punto $P$, un vector $valid\_historical\_places$ filtrando $historical\_places$ (de tamaño $H$),
-un int $V$, un vector bidimencional $dp$ de tamaño $V \times V$ y ordena $valid\_historical\_places$. Como $V$ es el tamaño
+un int $V$, un vector bidimensional $dp$ de tamaño $V \times V$ y ordena $valid\_historical\_places$. Como $V$ es el tamaño
 del vector resultante de filtrar $historical\_places$, $V \leq H$.
 Entonces todo esto tiene una complejidad de $O(1+H+V+V*+H*log(H)) = H*log(H)$
 \item Para cada $i$ entre 0 y $H-1$ y para cada $j$ entre 0 y $i-1$: declara los ints $hi$ y $hj$, se fija el valor de \\
 $enemy\_places\_in\_triangle[ref\_point][hi][hj]$ y hace dos asignaciones en $h\_places$ y $dp[i][j]$. Además para cada
 $k$ entre 0 y $j-1$ entre las líneas 11 y 22 hace varias comparaciones y asignaciones, pero todas de complejidad constante.
 Todo esto tiene una complejidad de $O(H*(1+H*(1+H*1))) = O(H^3)$
-\item Busca el máximo de $dp$, que es un vector bidimencional de $V \times V$. Complejidad $O(V^2) = O(H^2)$
+\item Busca el máximo de $dp$, que es un vector bidimensional de $V \times V$. Complejidad $O(V^2) = O(H^2)$
 \end{itemize}
 
 Entonces sumando todo MaximosPuntosHistoricosDesde es $O(H*log(H)+H^3+H^2) = O(H^3)$.
@@ -374,7 +374,7 @@ Entonces sumando todo MaximosPuntosHistoricosDesde es $O(H*log(H)+H^3+H^2) = O(H
 Finalmente, el algoritmo principal, MaximosPuntosHistoricosEnMurallaConvexa:
 
 \begin{itemize}
-\item Declara dos vectores tridimecionales de tamaño $H \times H \times H$. Complejidad $O(H^3)$
+\item Declara dos vectores tridimensionales de tamaño $H \times H \times H$. Complejidad $O(H^3)$
 \item Para cada $i,j,k$ diferentes entre 0 y $H-1$: declara tres puntos $pi,pj,pk$, para cada $l$ entre 0 y $H-1$
 realiza comparaciones y asignaciones constantes entre las líneas 8-11 y para cada $l$ entre 0 y $E-1$
 realiza comparaciones y asignaciones constantes entre las líneas 14-17. Complejidad $O(H^3*(1+H+E)) = O(H^3*(H+E))$
