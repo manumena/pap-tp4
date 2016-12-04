@@ -58,6 +58,22 @@ void test_pow_mod_big_values() {
     ASSERT_EQ(pow_mod(BIG_PRIME - 5, 2), 25);
 }
 
+void test_get_permutations_between_cycles_single_elements() {
+    vector<int> cycle_sizes = {1, 1, 1, 1};
+    ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 4), 16);
+
+    cycle_sizes = {1, 1, 1};
+    ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 3), 4);
+}
+
+void test_get_permutations_between_cycles_mixed_sizes() {
+    vector<int> cycle_sizes = {3, 1, 1, 1};
+    ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 4), 16);
+
+    cycle_sizes = {3, 3, 5, 7};
+    ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 4), 4096);
+}
+
 void test_sample_inputs() {
     vector<int> permutation = {2, 4, 3, 1};
     vector<int> cycle_sizes = get_cycle_sizes(permutation);
@@ -162,6 +178,8 @@ void run_unit_tests() {
     RUN_TEST(test_get_two_cycles);
     RUN_TEST(test_pow_mod_small_values);
     RUN_TEST(test_pow_mod_big_values);
+    RUN_TEST(test_get_permutations_between_cycles_single_elements);
+    RUN_TEST(test_get_permutations_between_cycles_mixed_sizes);
     RUN_TEST(test_sample_inputs);
     RUN_TEST(test_get_posible_tournaments_count_single_element);
     RUN_TEST(test_get_posible_tournaments_count_single_cycle_size_three);

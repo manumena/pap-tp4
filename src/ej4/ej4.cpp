@@ -50,6 +50,60 @@ vector<int> get_cycle_sizes(vector<int>& permutation) {
     return cycle_sizes;
 }
 
+int get_permutations_between_cycles(
+        const vector<int>& cycle_sizes, const int i, const int j) {
+    long long total_permutations = 1;
+    map<int, int> left_half_cycles;
+    map<int, int> right_half_cycles;
+
+    for (int l = i; l < (i + j) / 2; l++) {
+        if (left_half_cycles.find(cycle_sizes[l]) != left_half_cycles.end()) {
+            left_half_cycles[cycle_sizes[l]]++;
+        } else {
+            left_half_cycles[cycle_sizes[l]] = 1;
+        }
+    }
+
+    for (int r = (i + j) / 2; r < j; r++) {
+        if (right_half_cycles.find(cycle_sizes[r]) != right_half_cycles.end()) {
+            right_half_cycles[cycle_sizes[r]]++;
+        } else {
+            right_half_cycles[cycle_sizes[r]] = 1;
+        }
+    }
+
+    map<int, int>::iterator left_half_cycles_iterator;
+    map<int, int>::iterator right_half_cycles_iterator;
+    int min_cycle_size;
+    long long cycle_permutations;
+    for (left_half_cycles_iterator = left_half_cycles.begin();
+        left_half_cycles_iterator != left_half_cycles.end();
+        left_half_cycles_iterator++) {
+
+        for (right_half_cycles_iterator = right_half_cycles.begin();
+            right_half_cycles_iterator != right_half_cycles.end();
+            right_half_cycles_iterator++) {
+
+            min_cycle_size = min(left_half_cycles_iterator->first,
+                    right_half_cycles_iterator->first
+
+            cycle_permutations =
+                pow_mod(
+                    pow_mod(
+                        pow_mod(2, min_cycle_size),
+                        right_half_cycles_iterator->second
+                    ),
+                    left_half_cycles_iterator->second
+                );
+
+            total_permutations =
+                (total_permutations * cycle_permutations) % BIG_PRIME;
+        }
+    }
+
+    return total_permutations;
+}
+
 int get_partial_posible_tournaments_count(
          const vector<int>& cycle_sizes, const int i, const int j) {
     if (j - i == 0) {
@@ -62,14 +116,13 @@ int get_partial_posible_tournaments_count(
         long long right_half_count =
             get_partial_posible_tournaments_count(cycle_sizes, (i + j) / 2, j);
 
-        long long tournament_count = (left_half_count * right_half_count) % BIG_PRIME;
-        int min_cycle_size;
-        for (int l = i; l < (i + j) / 2; l++) {
-            for (int r = (i + j) / 2; r < j; r++) {
-                min_cycle_size = min(cycle_sizes[l], cycle_sizes[r]);
-                tournament_count = (tournament_count * pow_mod(2, min_cycle_size)) % BIG_PRIME;
-            }
-        }
+        long long tournament_count =
+            (left_half_count * right_half_count) % BIG_PRIME;
+
+        tournament_count =
+            (tournament_count *
+            get_permutations_between_cycles(cycle_sizes, i, j)) % BIG_PRIME;
+
         return tournament_count;
     }
 }
