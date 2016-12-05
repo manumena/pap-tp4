@@ -1,6 +1,6 @@
 \section{Ejercicio 4}
 
-Peso asignado: X.
+Peso asignado: 6.
 
 \subsection{Introducción}
 
@@ -10,3 +10,364 @@ isomorfos a sí mismos luego de haber aplicado $P$ sobre el conjunto de vértice
 Dado que el resultado podía llegar a tomar valores muy grandes la respuesta
 se devuelve módulo $10^9 + 7$. Por último, la complejidad temporal pedida era
 $\ord(N^2 \times \log N)$ pudiendo esta ser mejorada a $\ord(N \times \log N)$.
+
+\subsection{Solución}
+
+\subsubsection{Permutación como conjunto de ciclos}
+
+La solución propuesta utiliza fuertemente el hecho de que una permutación $P$ de
+números entre 1 y $N$ puede ser representada mediante un conjunto de ciclos
+dirigidos donde cada arco $(u, v)$ corresponde a $(u, P(u))$ donde $P(u) = v$.
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\begin{table}[H]
+    \caption{Ejemplo de permutación $P$ con $N = 4$.} \label{ej4:table:perm}
+    \centering
+    \begin{tabular}{|c|M{2em}|M{2em}|M{2em}|M{2em}|}
+        \hline
+        $x$ & 1 & 2 & 3 & 4 \\
+        \hline
+        $P(x)$ & 2 & 3 & 1 & 4 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \caption{Representación de la permutación definida en el Cuadro
+    \ref{ej4:table:perm} mediante ciclos dirigidos.} \label{ej4:fig:perm}
+    \centering
+    \begin{tikzpicture}
+        \SetGraphUnit{2}
+        \GraphInit[vstyle=Normal]
+        \tikzset{EdgeStyle/.style={->}}
+        \Vertex{1}
+        \EA(1){2}
+        \SO(1){3}
+        \EA(3){4}
+        \Edge[style={bend left=30}](1)(2)
+        \Edge[style={bend left=30}](2)(3)
+        \Edge[style={bend left=30}](3)(1)
+        \Loop[dist=4em,dir=SOEA](4)
+    \end{tikzpicture}
+\end{figure}
+
+A raíz de esto lo primero que haremos será estudiar las permutaciones formadas
+por únicamente un ciclo.
+
+\subsubsection{Permutaciones de un ciclo} \label{ej4:sec:unciclo}
+
+Lo que interesa analizar es el número de grafos torneos de tamaño $N$ que luego
+de aplicarles la permutación $P$ son isomorfos al grafo torneo original. Un
+grafo torneo es un grafo completo donde todas las aristas tienen asignada una
+dirección. Formalmente, se desea contar los grafos torneo $G$ que cumplen
+$(\forall (v, w) \in E(G)) (P(v), P(w)) \in E(P(G))$.
+
+Una condición necesaria para que se cumpla esto, es que todos los elementos
+pertenecientes al mismo ciclo de una permutación posean el mismo grado de
+entrada y salida entre sí en el grafo torneo.
+
+Supongamos que esto no es cierto, entonces debería existir un par de vértices
+$v_0, w_0 (v_0 \neq w_0)$ con distinto grado de salida pertenecientes a un grafo
+torneo isomorfo a su permutación de un ciclo. Tanto $v_0$ y $w_0$ tendrán un
+predecesor en la permutación vista como ciclo. Llamemos $v_1$ el vértice tal que
+$P(v_1) = v_0$ y $w_1$ el que cumple $P(w_1) = w_0$. Para que $G$ sea isomorfo a
+su permutación, como $v_1$ toma el lugar de $v_0$, tiene que tener el mismo
+grado de salida, lo mismo con $w_1$ y $w_0$. Este razonamiento se puede aplicar
+a los predecesores de $v_1$ y $w_1$, forzando a que existan $v_2$ y $w_2$
+manteniendo los correspondientes grados de salida. Si se sigue aplicando esta
+lógica, llegará un momento donde el predecesor de $v_k$ será $w_0$ o bien el de
+$w_k$ será $v_0$. Esto implica que $P(w_0) = v_k$ o $P(v_0) = w_k$, lo cual no
+es posible, ya que teniendo distinto grado de salida el isomorfismo no sería
+valido. La demostración es análoga para el grado de entrada.
+
+Habiendo dicho esto, demostraremos que para permutaciones que forman un ciclo
+par, no existe un grafo torneo que sea isomorfo al aplicarle la misma. Si el
+ciclo es par, el grafo torneo correspondiente tiene un número par de nodos.
+Supongamos que es posible asignarle el mismo grado de salida a todos los nodos,
+para ello podemos utilizar la siguiente igualdad: $\sum_{v \in V(G)} d_{out}(v)
+= \#E(G)$. Asumamos que el grado de salida es $k$ para todos los vértices,
+entonces tenemos: $N \times k = \#E(G) = \frac{N \times (N - 1)}{2}$. Dividiendo
+por $N$ de ambos lados nos queda $k = \frac{N - 1}{2}$ que como $N$ es par, $N -
+1$ es impar, por lo tanto no divisible por 2. Queda así demostrado que si el
+tamaño del ciclo de la permutación es par, no es posible asignarles el mismo
+grado a todos los nodos lo cual lleva a que no se cumpla la condición necesaria
+enunciada anteriormente.
+
+Para los ciclos impares primero veremos que es posible tener todos los nodos con
+el mismo grado de salida, luego demostraremos la cantidad de grafos torneos que
+cumplen lo pedido en función del tamaño del ciclo.
+
+Aplicando la misma igualdad que en el párrafo anterior tenemos $N \times k =
+\#E(G) = \frac{N \times (N - 1)}{2}$ donde al dividir por $N$ de ambos lados nos
+queda $k = \frac{N - 1}{2}$ que ahora teniendo $N$ impar, $N - 1$ es par, por lo
+tanto divisible por 2. Así llegamos a que no sólo es posible asignarle el mismo
+grado de salida a cada nodo si no que además el mismo vale $\frac{N - 1}{2}$.
+
+Queda entonces ver cuántos grafos torneo cumplen ser isomorfos con su
+permutación siendo esta un ciclo impar. Para esto se utilizará un argumento
+similar al utilizado para probar que no podían existir dos vértices con distinto
+grado. Sabemos que todos los nodos tienen $\frac{N - 1}{2}$ arcos salientes y
+por ende $\frac{N - 1}{2}$ arcos entrantes, lo que habría que demostrar es cómo
+asignarlos en cada vértice de forma tal que se cumpla el isomorfismo.
+
+A continuación demostraremos que únicamente los grafos torneos donde todos los
+vértices se conectan de la misma forma hacia sus $\frac{N - 1}{2}$ sucesores del
+ciclo de la permutación forman un isomorfismo válido. Supongamos que esto no es
+cierto, por lo tanto existe un par de vértices $v_0, w_0 (v_0 \neq w_0)$ que se
+conecta de forma distinta a los correspondientes $\frac{N - 1}{2}$ sucesores del
+ciclo de la permutación. Aquí es donde aplicamos el mismo razonamiento que en la
+demostración de los grados de los vértices. Existen $v_1$ y $w_1$ tal que
+$P(v_1) = v_0$ y $P(w_1) = w_0$ los cuales al tomar el lugar de $v_0$ y $w_0$ en
+el grafo torneo permutado deberán estar conectados de la misma forma a sus
+$\frac{N - 1}{2}$ sucesores. Se realiza el proceso de ir repitiendo este
+razonamiento en los predecesores hasta que se tiene $P(v_0) = w_k$ o $P(w_0) =
+v_k$ que como difieren en la forma de saltar a sus sucesores no permite un
+isomorfismo válido.
+
+Habiendo probado esto, calcular el número de grafos torneo posibles para una
+permutación correspondiente a un ciclo impar de longitud $N$ es equivalente a
+contar la cantidad de formas en las que un vértice puede saltar a sus $\frac{N -
+1}{2}$ sucesores. Cada arco puede ser tanto saliente como entrante, y se tienen $\frac{N -
+1}{2}$ a definir, por lo tanto un total de $2^{\frac{N -1}{2}}$ combinaciones
+posibles.
+
+\subsubsection{Permutaciones entre ciclos} \label{ej4:sec:paresciclos}
+
+Como se ve en la Figura \ref{ej4:fig:perm}, una permutación puede estar
+representada por más de un ciclo. Vimos cómo calcular el número de combinaciones
+que brinda un ciclo en particular ahora es necesario ver las combinaciones
+posibles entre todos los que componen la permutación.
+
+Para esto estudiaremos las combinaciones posibles entre un par de ciclos, ya que
+veremos las combinaciones que suman los otros ciclos son independientes entre
+sí. Teniendo dos ciclos impares $C_0$ y $C_1$ para obtener un grafo torneo deben
+existir todas las aristas entre ellos con una dirección asignada. A su vez,
+queremos que al aplicar la correspondiente permutación, por cada arco $(v, u)$
+de $C_0$ a $C_1$ exista $(P(v), P(u)) \in E(P(G))$ al igual que con los
+arcos $(u, v)$ de $C_1$ a $C_0$.
+
+Tomando un $v_0$ cualquiera de $C_0$ hay $N$ arcos a asignar contra $C_1$. Una vez
+que estos están asignados, sabemos que existe $v_1$ tal que $P(v_1) = v_0$, con
+lo cual deseamos que al tomar su lugar valga el isomorfismo. Para ello, la forma
+de asignar las direcciones de $v_1$ contra $C_1$ debe ser tal que al aplicar la
+permutación a cada uno de sus arcos corresponda con las asignaciones de $v_0$
+contra $C_1$ en el grafo original. Esto se puede aplicar al predecesor $v_2$ con
+$P(v_2) = v_1$ y repetirlo hasta dar toda la vuelta formando entonces un
+isomorfismo válido bajo la restricción de que cada nodo se conecte contra $C_1$
+utilizando las mismas direcciones contra los nodos que al aplicarles la
+permutación serán equivalentes a las asignaciones de su sucesor.
+
+Si se decidiera asignar las direcciones sin respetar este criterio, para algún
+vértice ocurrirá que luego de la permutación las asignaciones serán distintas a
+las del grafo original, por lo tanto no corresponderá a un isomorfismo válido.
+
+Mediante este método, el número de combinaciones entre un par de ciclos impares
+es la cantidad de formas de asignar direcciones del del mayor al menor. Se
+tienen dos direcciones posibles y $\min(\#V(C_0), \#V(C_1))$ arcos, lo cual
+corresponde a un total de $2^{\min(\#V(C_0), \#V(C_1))}$ combinaciones por cada
+par de ciclos.
+
+El hecho de que cada par de ciclos agregue independientemente del resto esta
+cantidad de combinaciones posibles se debe a que la forma en la que un ciclo
+asigna sus arcos para sí mismo así como contra el resto de los ciclos no afecta
+la elección de arcos contra el par elegido en particular. Lo único que se asume
+es que se comienza con dos ciclos impares cuya asignación de arcos para sí y
+contra el resto es válida con respecto al isomorfismo buscado.
+
+\subsubsection{Algoritmo \emph{Divide \& Conquer}}
+
+El algoritmo desarrollado para contar el total de combinaciones posibles hace
+uso de la técnica algorítmica \emph{Divide \& Conquer} donde dado un arreglo $C$ con
+los tamaños de los ciclos correspondientes a la permutación realiza los
+siguientes pasos:
+
+\begin{itemize}
+	\item Si $|C| = 1$, si el tamaño del ciclo es par, devuelvo 0, caso contrario
+    $2^{\frac{N -1}{2}}$ con $N$ siendo el tamaño del ciclo.
+    \item Si $|C| > 1$ entonces llamo el algoritmo sobre el intervalo $\left[0,
+    \frac{|C|}{2} \right)$ y $\left[\frac{|C|}{2}, |C| \right)$, multiplico
+    ambos resultados y los multiplico a su vez por el número de combinaciones
+    entre los ciclos de ambas mitades.
+\end{itemize}
+
+A continuación se presenta el pseudocódigo del algoritmo que aplica \emph{Divide
+\& Conquer}:
+
+\begin{algorithm}[H]
+    \caption{Número de grafos torneos isomorfos a su permutación $P$}
+    \Input{Arreglo $C$ con las longitudes de los ciclos de $P$ e índices $i$ y
+    $j$,}
+    \Output{Devuelve el número de grafos torneos isomorfos a sí mismos con la
+    permutación $P$ módulo $10^9 + 7$.}
+
+    \eIf{$j - i == 0$} {
+        \Return{1} \;
+    }
+    {
+        \eIf{$j - i == 1$} {
+            \Return{\emph{$0$ si el ciclo es impar, $2^{\frac{C[i] - 1}{2}}$ caso
+            contrario}} \;
+        }
+        {
+            \emph{primeraMitad} $\gets$
+                \emph{calcular y guardar combinaciones posibles para los ciclos
+                en el intervalo $\left[ i, \frac{i + j}{2} \right)$} \;
+            \emph{segundaMitad} $\gets$
+                \emph{calcular y guardar combinaciones posibles para los ciclos
+                en el intervalo $\left[ \frac{i + j}{2}, j \right)$} \;
+            \emph{combinacionesPosibles} $\gets$
+                \emph{(primeraMitad $\times$ segundaMitad)
+                \% $(10^9 + 7)$} \;
+            \emph{combinacionesPosibles} $\gets$
+                \emph{(combinacionesPosibles $\times$
+                número de combinaciones entre ciclos de ambas mitades)
+                \% $(10^9 + 7)$} \;
+
+            \Return{\emph{combinacionesPosibles}} \;
+        }
+    }
+\end{algorithm}
+
+El algoritmo anterior recibe como entrada un arreglo $C$ con las longitudes de
+los ciclos de $P$, el mismo se genera mediante el siguiente algoritmo:
+
+\begin{algorithm}[H]
+    \caption{Longitudes de ciclos de permutación $P$}
+    \Input{Arreglo con la permutación $P$.}
+    \Output{Devuelve un arreglo $C$ con las longitudes de los ciclos de la
+    permutación $P$.}
+
+    \emph{longitudesCiclos} $\gets$ \emph{lista vacía} \;
+	\For{\emph{i} \textbf{en} $\left[ 0, |P| \right)$} {
+        \If{\emph{$P[i]$ no fue visitado}} {
+            \emph{longitudCiclo} $\gets$ $1$ \;
+            \emph{j} $\gets$ \emph{i} \;
+            \emph{marcar a $P[j]$ como visitado} \;
+            \While{$P[j] \neq j + 1$} {
+                \emph{longitudCiclo} $\gets$ \emph{longitudCiclo} + 1 \;
+                \emph{j} $\gets$ $P[j]$ \;
+                \emph{marcar a $P[j]$ como visitado} \;
+            }
+            \emph{longitudesCiclos}\textbf{.agregar}(\emph{longitudCiclo}) \;
+        }
+    }
+    \Return{\emph{longitudesCiclos}} \;
+\end{algorithm}
+
+Por último, el algoritmo utilizado para calcular las combinaciones entre ciclos
+de dos mitades:
+
+\begin{algorithm}[H]
+    \caption{Cantidad de combinaciones entre los ciclos de la primer y segunda
+    mitad}
+    \Input{Arreglo $C$ con longitudes de ciclos e índices $i$ y $j$.}
+    \Output{Cantidad de combinaciones posibles entre los ciclos de la primera y
+    la segunda mitad.}
+
+    \emph{totalPermutaciones} $\gets$ 1 \;
+    \emph{ciclosPrimeraMitad} $\gets$ \emph{diccionario donde las llaves son los
+    tamaños de los ciclos y los valores la cantidad existente con ese tamaño
+    para la primer mitad} \;
+    \emph{ciclosSegundaMitad} $\gets$ \emph{diccionario donde las llaves son los
+    tamaños de los ciclos y los valores la cantidad existente con ese tamaño
+    para la segunda mitad} \;
+
+    \ForEach{\emph{clavePrimeraMitad} \textbf{en} \emph{ciclosPrimeraMitad}} {
+        \ForEach{\emph{claveSegundaMitad} \textbf{en} \emph{ciclosSegundaMitad}} {
+            \emph{cicloMásChico} $\gets$
+                \emph{mínimo entre clavePrimeraMitad y claveSegundaMitad} \;
+            \emph{permutaciones} $\gets$
+                $(2^{\emph{cicloMásChico}})^{\emph{ciclosSegundaMitad[claveSegundaMitad]}}$ \;
+            \emph{permutaciones} $\gets$
+            $\emph{permutaciones}^{ciclosPrimeraMitad[clavePrimeraMitad]}$ \;
+            \emph{totalPermutaciones} $\gets$
+            (\emph{totalPermutaciones} $\times$ \emph{permutaciones}
+            \emph{\% $(10^9 + 7)$} \;
+        }
+    }
+    \Return{\emph{totalPermutaciones}} \;
+\end{algorithm}
+
+\subsubsection{Correctitud}
+
+Para ver que el algoritmo es correcto es posible realizar inducción sobre el
+tamaño del arreglo $C$ con las longitudes de ciclos de la permutación $P$. El
+caso base sería arreglo de un elemento donde vemos que es correcto ya que hace
+la cuenta desarrollada en la Sección \ref{ej4:sec:unciclo} para calcular el
+número de combinaciones con un único ciclo. Para el paso inductivo, teniendo
+como hipótesis inductiva que el algoritmo funciona para arreglos $C$ de longitud
+$N - 1$ es posible asumir que las llamadas a las dos mitades calculan de forma
+correcta las combinaciones posibles en cada una de ellas. Por lo tanto, una vez
+que se calculan todas las posibles combinaciones entre ellas siguiendo lo
+descrito en la Sección \ref{ej4:sec:paresciclos} el algoritmo es correcto para
+$N$.
+
+\subsection{Complejidad teórica}
+
+El algoritmo desarrollado tiene una complejidad temporal $\ord(N \times \log
+N)$. Para probar esto estudiaremos la resolución de a partes.
+
+Lo primero que se hace es transformar la permutación $P$ en el arreglo con
+longitudes de ciclos $C$. Esto tiene un costo $\ord(N)$ ya que se iteran los
+elementos de $P$ y al marcarlos como visitados no se vuelven a recorrer los
+ciclos que ya se agregaron.
+
+Para demostrar la complejidad del \emph{Divide \& Conquer} primero estudiaremos
+la complejidad de calcular las combinaciones posibles entre dos mitades de
+ciclos.
+
+En esta rutina primero se cuenta la cantidad de ciclos de cierta
+longitud que hay en cada mitad. Esto en el peor caso es $\ord(N)$, que sería
+cuando todos los ciclos son de un único elemento. A esto se le suma el recorrer
+ambos mapas y generar el producto correspondientes. Cada mapa tiene a lo sumo
+tamaño $\sqrt{N}$ ya que si hubiera más de $\sqrt{N}$ tamaños de ciclos entonces
+la suma de los mismos sería distinta a $N$. Por lo tanto, la iteración de ambos
+mapas tiene un costo $\ord(\sqrt{N} \times \sqrt{N}) = \ord(N)$. El costo de
+calcular las potencias módulo $10^9 + 7$ es constante puesto que siempre se está
+operando con valores módulo $10^9 + 7$, por lo tanto la operación es sobre una
+entrada que está acotado por una constante.
+
+Así demostramos entonces que calcular las combinaciones entre ambas mitades
+tiene costo lineal. Luego, dado que el \emph{Divide \& Conquer} parte a
+la mitad hasta llegar a elementos de tamaño uno, el mismo llama $\ord(\log{N})$
+veces el paso de \emph{merge} donde se realiza la llamada con costo lineal más
+los productos que ya dijimos eran constantes.
+
+Por lo tanto, tenemos $\ord(N \times \log N)$ como complejidad temporal.
+
+\subsection{Casos de prueba}
+
+Para probar el correcto funcionamiento del algoritmo se realizaron pruebas a
+distinto nivel:
+
+\begin{itemize}
+    \item Pruebas sobre la función de potencia con módulo
+    \item Pruebas sobre la función que cuenta los ciclos en $P$
+    \item Pruebas sobre la función que cuenta la cantidad de combinaciones entre
+    dos mitades de ciclos
+    \item Pruebas sobre la función que cuenta el total de torneos isomorfos a su
+    permutación $P$
+\end{itemize}
+
+Los primeros tres tipos de pruebas fueron para asegurar el correcto
+funcionamiento con números que estuvieran por debajo y encima del valor $10^9 +
+7$, así como ver que cada módulo cumpliera correctamente su función para
+distintos tipos de permutaciones (de un único ciclos, varios ciclos, ciclos
+formados por un único elemento).
+
+La última prueba verifica la funcionalidad final del algoritmo, utilizando primero
+entradas pequeñas controladas con distintos tipos de permutaciones:
+
+\begin{itemize}
+    \item Un ciclo de un elemento
+    \item Un ciclo de tres elementos
+    \item Dos ciclos
+    \item Tres ciclos
+    \item Cuatro ciclos de un elemento
+    \item Ciclos pares
+\end{itemize}
+
+Y por último buscando probar resultados que excedieran el valor $10^9 +
+7$ por un lado, y por el otro con permutaciones de tamaño $10^5$ para corroborar
+que el algoritmo pudiera manejar ese tamaño de entrada.
