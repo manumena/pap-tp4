@@ -1,4 +1,4 @@
-ENTREGABLE=ken_thompson.tar.gz
+ENTREGABLE=sergio_lerner.tar.gz
 FILES=latex/informe.pdf src
 
 .PHONY: all clean
