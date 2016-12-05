@@ -85,7 +85,7 @@ int get_permutations_between_cycles(
             right_half_cycles_iterator++) {
 
             min_cycle_size = min(left_half_cycles_iterator->first,
-                    right_half_cycles_iterator->first
+                    right_half_cycles_iterator->first);
 
             cycle_permutations =
                 pow_mod(
