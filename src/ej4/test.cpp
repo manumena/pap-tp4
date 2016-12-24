@@ -71,7 +71,7 @@ void test_get_permutations_between_cycles_mixed_sizes() {
     ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 4), 16);
 
     cycle_sizes = {3, 3, 5, 7};
-    ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 4), 4096);
+    ASSERT_EQ(get_permutations_between_cycles(cycle_sizes, 0, 4), 16);
 }
 
 void test_sample_inputs() {
@@ -172,6 +172,14 @@ void test_get_posible_tournaments_big_input() {
     ASSERT_EQ(tournament_count, 298208567);
 }
 
+void test_get_posible_tournaments_cycles_nine_fifteen() {
+    vector<int> permutation = {2, 3, 4, 5, 6, 7, 8, 9, 1,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 10};
+    vector<int> cycle_sizes = get_cycle_sizes(permutation);
+    int tournament_count = get_posible_tournaments_count(cycle_sizes);
+    ASSERT_EQ(tournament_count, 16384);
+}
+
 void run_unit_tests() {
     RUN_TEST(test_get_single_element_cycle);
     RUN_TEST(test_get_single_cycle_size_five);
@@ -189,4 +197,5 @@ void run_unit_tests() {
     RUN_TEST(test_get_posible_tournaments_count_even_cycles);
     RUN_TEST(test_get_posible_tournaments_big_count_values);
     RUN_TEST(test_get_posible_tournaments_big_input);
+    RUN_TEST(test_get_posible_tournaments_cycles_nine_fifteen);
 }

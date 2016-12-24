@@ -7,6 +7,10 @@ using namespace std;
 **  Problem solver
 */
 
+int gcd(int a, int b) {
+    return (a == 0) ? b : gcd(b % a, a);
+}
+
 int min(int a, int b) {
     return a < b ? a : b;
 }
@@ -74,7 +78,7 @@ int get_permutations_between_cycles(
 
     map<int, int>::iterator left_half_cycles_iterator;
     map<int, int>::iterator right_half_cycles_iterator;
-    int min_cycle_size;
+    int gcd_cycle_size;
     long long cycle_permutations;
     for (left_half_cycles_iterator = left_half_cycles.begin();
         left_half_cycles_iterator != left_half_cycles.end();
@@ -84,13 +88,13 @@ int get_permutations_between_cycles(
             right_half_cycles_iterator != right_half_cycles.end();
             right_half_cycles_iterator++) {
 
-            min_cycle_size = min(left_half_cycles_iterator->first,
+            gcd_cycle_size = gcd(left_half_cycles_iterator->first,
                     right_half_cycles_iterator->first);
 
             cycle_permutations =
                 pow_mod(
                     pow_mod(
-                        pow_mod(2, min_cycle_size),
+                        pow_mod(2, gcd_cycle_size),
                         right_half_cycles_iterator->second
                     ),
                     left_half_cycles_iterator->second
