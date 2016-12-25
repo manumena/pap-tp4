@@ -142,31 +142,30 @@ posibles entre todos los que componen la permutación.
 Para esto estudiaremos las combinaciones posibles entre un par de ciclos, ya que
 veremos las combinaciones que suman los otros ciclos son independientes entre
 sí. Teniendo dos ciclos impares $C_0$ y $C_1$ para obtener un grafo torneo deben
-existir todas las aristas entre ellos con una dirección asignada. A su vez,
-queremos que al aplicar la correspondiente permutación, por cada arco $(v, u)$
-de $C_0$ a $C_1$ exista $(P(v), P(u)) \in E(P(G))$ al igual que con los
-arcos $(u, v)$ de $C_1$ a $C_0$.
+existir todas las aristas entre ellos con una dirección asignada.
 
-Tomando un $v_0$ cualquiera de $C_0$ hay $N$ arcos a asignar contra $C_1$. Una vez
-que estos están asignados, sabemos que existe $v_1$ tal que $P(v_1) = v_0$, con
-lo cual deseamos que al tomar su lugar valga el isomorfismo. Para ello, la forma
-de asignar las direcciones de $v_1$ contra $C_1$ debe ser tal que al aplicar la
-permutación a cada uno de sus arcos corresponda con las asignaciones de $v_0$
-contra $C_1$ en el grafo original. Esto se puede aplicar al predecesor $v_2$ con
-$P(v_2) = v_1$ y repetirlo hasta dar toda la vuelta formando entonces un
-isomorfismo válido bajo la restricción de que cada nodo se conecte contra $C_1$
-utilizando las mismas direcciones contra los nodos que al aplicarles la
-permutación serán equivalentes a las asignaciones de su sucesor.
+El número de aristas a asignar en total corresponde a $|C_0| \times |C_1|$.
+Cuando se agrega una arista entre ciclos, inmediatamente se está definiendo la
+dirección de otras aristas entre ambos. Esto es consecuencia del mismo proceso
+estudiado para calcular el número de permutaciones dentro de un mismo ciclo. Al
+agregar una arista $(u, v)$ donde $u \in C_0$ y $v \in C_1$, para que la
+permutación resulte en el mismo grafo torneo, también debe existir $(P(u),
+P(v))$. Esto se repite hasta que para algún par $(u', v')$ se tenga que $(P(u'),
+P(v')) = (u, v)$. La pregunta entonces es cuántas aristas son asignadas hasta
+llegar al punto donde se vuelve a la primera. Cada arista agregada avanza en uno la
+posición de ambos ciclos de permutaciones, por lo tanto, el número de aristas
+que se deben agregar para que ambos ciclos vuelvan a la posición inicial
+corresponde al mínimo común múltiplo entre $|C_0|$ y $|C_1|$. Finalmente,
+teniendo el total de aristas a agregar y la cantidad que se agregan como
+consecuencia de una arista nueva podemos calcular cuántos grupos de aristas
+habrán. Tomando el número total de aristas a agregar y dividiéndolo por el mínimo común
+múltiplo se obtiene $\frac{|C_0| \times |C_1|}{MCM(|C_0|, |C_1|)}$ que
+corresponde con el valor del máximo común divisor $MCD(|C_0|, |C_1|)$.
 
-Si se decidiera asignar las direcciones sin respetar este criterio, para algún
-vértice ocurrirá que luego de la permutación las asignaciones serán distintas a
-las del grafo original, por lo tanto no corresponderá a un isomorfismo válido.
-
-Mediante este método, el número de combinaciones entre un par de ciclos impares
-es la cantidad de formas de asignar direcciones del del mayor al menor. Se
-tienen dos direcciones posibles y $\min(\#V(C_0), \#V(C_1))$ arcos, lo cual
-corresponde a un total de $2^{\min(\#V(C_0), \#V(C_1))}$ combinaciones por cada
-par de ciclos.
+Lo último a notar es que cada grupo de aristas que se agrega puede tener
+asignada una dirección distinta a la de los grupos anteriores. Por lo tanto, la
+cantidad de formas de orientar las aristas entre dos ciclos corresponde a
+$2^{MCD(|C_0|, |C_1|)}$.
 
 El hecho de que cada par de ciclos agregue independientemente del resto esta
 cantidad de combinaciones posibles se debe a que la forma en la que un ciclo
@@ -275,14 +274,14 @@ de dos mitades:
 
     \ForEach{\emph{clavePrimeraMitad} \textbf{en} \emph{ciclosPrimeraMitad}} {
         \ForEach{\emph{claveSegundaMitad} \textbf{en} \emph{ciclosSegundaMitad}} {
-            \emph{cicloMásChico} $\gets$
-                \emph{mínimo entre clavePrimeraMitad y claveSegundaMitad} \;
+            \emph{máximoComúnDivisor} $\gets$
+                \emph{máximo común divisor entre clavePrimeraMitad y claveSegundaMitad} \;
             \emph{permutaciones} $\gets$
-                $(2^{\emph{cicloMásChico}})^{\emph{ciclosSegundaMitad[claveSegundaMitad]}}$ \;
+                $(2^{\emph{máximoComúnDivisor}})^{\emph{ciclosSegundaMitad[claveSegundaMitad]}}$ \;
             \emph{permutaciones} $\gets$
             $\emph{permutaciones}^{ciclosPrimeraMitad[clavePrimeraMitad]}$ \;
             \emph{totalPermutaciones} $\gets$
-            (\emph{totalPermutaciones} $\times$ \emph{permutaciones}
+            \emph{totalPermutaciones} $\times$ \emph{permutaciones}
             \emph{\% $(10^9 + 7)$} \;
         }
     }
